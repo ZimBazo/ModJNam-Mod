@@ -14,8 +14,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.level.Level;
-
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public class CactusTNTEntity extends Entity {
 	private static final EntityDataAccessor<Integer> FUSE = SynchedEntityData.defineId(CactusTNTEntity.class, EntityDataSerializers.INT);
