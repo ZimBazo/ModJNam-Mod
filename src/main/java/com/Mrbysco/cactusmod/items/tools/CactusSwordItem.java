@@ -11,8 +11,8 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class CactusSwordItem extends SwordItem {
 
-	public CactusSwordItem(Tier tier, int attackDamageIn, float attackSpeedIn, Item.Properties builderIn) {
-		super(tier, attackDamageIn, attackSpeedIn, builderIn);
+	public CactusSwordItem(Tier tier, int attackDamage, float attackSpeed, Item.Properties builder) {
+		super(tier, builder.attributes(SwordItem.createAttributes(tier, attackDamage, attackSpeed)));
 	}
 
 	@Override

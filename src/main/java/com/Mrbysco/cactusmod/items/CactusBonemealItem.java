@@ -17,7 +17,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CactusBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.event.EventHooks;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,8 +43,8 @@ public class CactusBonemealItem extends Item {
 
 	public static boolean applyBonemeal(ItemStack stack, Level level, BlockPos pos, net.minecraft.world.entity.player.Player player) {
 		BlockState blockstate = level.getBlockState(pos);
-		int hook = EventHooks.onApplyBonemeal(player, level, pos, blockstate, stack);
-		if (hook != 0) return hook > 0;
+		var event = EventHooks.fireBonemealEvent(player, level, pos, blockstate, stack);
+		if (event.isCanceled()) return event.isSuccessful();
 
 		if (blockstate.getBlock() instanceof CactusBlock) {
 			if (canGrow(level, pos, blockstate)) {
@@ -96,11 +95,11 @@ public class CactusBonemealItem extends Item {
 				int j = state.getValue(CactusBlock.AGE) + getInt(level.random, 3, 8);
 				if (j >= 15) {
 					level.setBlockAndUpdate(blockpos, state.getBlock().defaultBlockState());
-					BlockState blockstate = state.setValue(CactusBlock.AGE, Integer.valueOf(0));
+					BlockState blockstate = state.setValue(CactusBlock.AGE, 0);
 					level.setBlock(pos, blockstate, 4);
-					blockstate.neighborChanged(level, blockpos, state.getBlock(), pos, false);
+					level.neighborChanged(blockstate, blockpos, state.getBlock(), pos, false);
 				} else {
-					level.setBlock(pos, state.setValue(CactusBlock.AGE, Integer.valueOf(j + 1)), 4);
+					level.setBlock(pos, state.setValue(CactusBlock.AGE, j + 1), 4);
 				}
 			}
 		}
@@ -141,8 +140,8 @@ public class CactusBonemealItem extends Item {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flagIn) {
-		super.appendHoverText(stack, level, tooltip, flagIn);
+	public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
+		super.appendHoverText(stack, context, tooltip, flag);
 		tooltip.add(Component.translatable("cactus.bonemeal.info").withStyle(ChatFormatting.GREEN));
 	}
 }

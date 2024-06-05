@@ -1,20 +1,11 @@
 package com.mrbysco.cactusmod.init;
 
-import com.mrbysco.cactusmod.Reference;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Tier;
-import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.neoforged.neoforge.common.SimpleTier;
-import net.neoforged.neoforge.common.TierSortingRegistry;
-
-import java.util.List;
 
 public class CactusTiers {
-	public static final Tier CACTUS = TierSortingRegistry.registerTier(
-			new SimpleTier(0, 67, 3.0F, 0.2F, 16,
-					CactusTags.NEEDS_CACTUS_TOOL,
-					() -> Ingredient.of(Items.CACTUS)),
-			new ResourceLocation(Reference.MOD_ID, "cactus"), List.of(Tiers.WOOD), List.of(Tiers.STONE));
+	public static final Tier CACTUS = new SimpleTier(CactusTags.INCORRECT_FOR_CACTUS_TOOL, 67, 3.0F, 0.2F, 16,
+			() -> Ingredient.of(Items.CACTUS));
 }

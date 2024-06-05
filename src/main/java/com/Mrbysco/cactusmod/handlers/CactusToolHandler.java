@@ -70,11 +70,7 @@ public class CactusToolHandler {
 	public static void damageShield(Player player, float damage) {
 		ItemStack shield = player.getUseItem();
 		InteractionHand handIn = player.getUsedItemHand();
-		shield.hurtAndBreak(1 + Mth.floor(damage), player,
-				(p_213833_1_) -> {
-					p_213833_1_.broadcastBreakEvent(handIn);
-					EventHooks.onPlayerDestroyItem(player, shield, handIn);
-				});
+		shield.hurtAndBreak(1 + Mth.floor(damage), player, Player.getSlotForHand(handIn));
 
 		if (shield.getCount() <= 0) {
 			EventHooks.onPlayerDestroyItem(player, shield, player.getUsedItemHand());

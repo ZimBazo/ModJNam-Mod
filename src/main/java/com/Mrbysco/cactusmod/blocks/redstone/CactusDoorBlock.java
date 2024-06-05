@@ -17,8 +17,8 @@ public class CactusDoorBlock extends DoorBlock {
 	}
 
 	@Override
-	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+	protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
 		player.hurt(player.damageSources().cactus(), 1.0F);
-		return super.use(state, level, pos, player, handIn, hit);
+		return super.useWithoutItem(state, level, pos, player, hitResult);
 	}
 }

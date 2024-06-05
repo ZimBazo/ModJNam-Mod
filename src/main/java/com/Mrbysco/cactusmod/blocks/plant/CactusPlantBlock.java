@@ -30,7 +30,7 @@ public class CactusPlantBlock extends PipeBlock {
 
 	public CactusPlantBlock(BlockBehaviour.Properties builder) {
 		super(0.3125F, builder);
-		this.registerDefaultState(this.stateDefinition.any().setValue(NORTH, Boolean.valueOf(false)).setValue(EAST, Boolean.valueOf(false)).setValue(SOUTH, Boolean.valueOf(false)).setValue(WEST, Boolean.valueOf(false)).setValue(UP, Boolean.valueOf(false)).setValue(DOWN, Boolean.valueOf(false)));
+		this.registerDefaultState(this.stateDefinition.any().setValue(NORTH, Boolean.FALSE).setValue(EAST, Boolean.FALSE).setValue(SOUTH, Boolean.FALSE).setValue(WEST, Boolean.FALSE).setValue(UP, Boolean.FALSE).setValue(DOWN, Boolean.FALSE));
 	}
 
 	@Override
@@ -46,12 +46,12 @@ public class CactusPlantBlock extends PipeBlock {
 		BlockState southState = getter.getBlockState(pos.south());
 		BlockState westState = getter.getBlockState(pos.west());
 		return this.defaultBlockState()
-				.setValue(DOWN, Boolean.valueOf(belowState.is(this) || belowState.is(CactusRegistry.CACTUS_PLANT.get()) || belowState.is(Tags.Blocks.SAND)))
-				.setValue(UP, Boolean.valueOf(aboveState.is(this) || aboveState.is(CactusRegistry.CACTUS_PLANT.get())))
-				.setValue(NORTH, Boolean.valueOf(northState.is(this) || northState.is(CactusRegistry.CACTUS_PLANT.get())))
-				.setValue(EAST, Boolean.valueOf(eastState.is(this) || eastState.is(CactusRegistry.CACTUS_PLANT.get())))
-				.setValue(SOUTH, Boolean.valueOf(southState.is(this) || southState.is(CactusRegistry.CACTUS_PLANT.get())))
-				.setValue(WEST, Boolean.valueOf(westState.is(this) || westState.is(CactusRegistry.CACTUS_PLANT.get())));
+				.setValue(DOWN, belowState.is(this) || belowState.is(CactusRegistry.CACTUS_PLANT.get()) || belowState.is(Tags.Blocks.SANDS))
+				.setValue(UP, aboveState.is(this) || aboveState.is(CactusRegistry.CACTUS_PLANT.get()))
+				.setValue(NORTH, northState.is(this) || northState.is(CactusRegistry.CACTUS_PLANT.get()))
+				.setValue(EAST, eastState.is(this) || eastState.is(CactusRegistry.CACTUS_PLANT.get()))
+				.setValue(SOUTH, southState.is(this) || southState.is(CactusRegistry.CACTUS_PLANT.get()))
+				.setValue(WEST, westState.is(this) || westState.is(CactusRegistry.CACTUS_PLANT.get()));
 	}
 
 	@Override
@@ -71,8 +71,8 @@ public class CactusPlantBlock extends PipeBlock {
 			level.scheduleTick(currentPos, this, 1);
 			return super.updateShape(stateIn, facing, facingState, level, currentPos, facingPos);
 		} else {
-			boolean flag = facingState.is(this) || facingState.is(CactusRegistry.CACTUS_FLOWER.get()) || facing == Direction.DOWN && facingState.is(Tags.Blocks.SAND);
-			return stateIn.setValue(PROPERTY_BY_DIRECTION.get(facing), Boolean.valueOf(flag));
+			boolean flag = facingState.is(this) || facingState.is(CactusRegistry.CACTUS_FLOWER.get()) || facing == Direction.DOWN && facingState.is(Tags.Blocks.SANDS);
+			return stateIn.setValue(PROPERTY_BY_DIRECTION.get(facing), flag);
 		}
 	}
 
@@ -97,14 +97,14 @@ public class CactusPlantBlock extends PipeBlock {
 				}
 
 				BlockState blockstate2 = level.getBlockState(blockpos.below());
-				if (blockstate2.is(this) || blockstate2.is(Tags.Blocks.SAND)) {
+				if (blockstate2.is(this) || blockstate2.is(Tags.Blocks.SANDS)) {
 					return true;
 				}
 			}
 		}
 
 		Block block2 = blockstate.getBlock();
-		return block2 == this || blockstate.is(Tags.Blocks.SAND);
+		return block2 == this || blockstate.is(Tags.Blocks.SANDS);
 	}
 
 	@Override
@@ -113,7 +113,7 @@ public class CactusPlantBlock extends PipeBlock {
 	}
 
 	@Override
-	public boolean isPathfindable(BlockState state, BlockGetter level, BlockPos pos, PathComputationType type) {
+	protected boolean isPathfindable(BlockState pState, PathComputationType pPathComputationType) {
 		return false;
 	}
 }

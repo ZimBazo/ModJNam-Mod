@@ -97,7 +97,7 @@ public class CactiCartEntity extends AbstractMinecart implements ICactusMob {
 		super.tick();
 		if (!this.level().isClientSide) {
 			if (this.isVehicle()) {
-				Entity entity = this.getPassengers().get(0);
+				Entity entity = this.getPassengers().getFirst();
 				if (entity instanceof LivingEntity && !(entity instanceof ICactusMob)) {
 					++this.timeInCart;
 					if (this.timeInCart >= 40) {

@@ -4,15 +4,18 @@ import com.mrbysco.cactusmod.Reference;
 import com.mrbysco.cactusmod.entities.goals.EatSandGoal;
 import com.mrbysco.cactusmod.init.CactusRegistry;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
@@ -42,6 +45,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.storage.loot.LootTable;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.neoforged.neoforge.common.IShearable;
@@ -71,7 +75,7 @@ public class CactusSheepEntity extends Animal implements IShearable, ICactusMob 
 		this.goalSelector.addGoal(0, new FloatGoal(this));
 		this.goalSelector.addGoal(1, new PanicGoal(this, 1.25D));
 		this.goalSelector.addGoal(2, new BreedGoal(this, 1.0D));
-		this.goalSelector.addGoal(3, new TemptGoal(this, 1.1D, Ingredient.of(Items.WHEAT), false));
+		this.goalSelector.addGoal(3, new TemptGoal(this, 1.1D, stack -> stack.is(ItemTags.SHEEP_FOOD), false));
 		this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.1D));
 		this.goalSelector.addGoal(5, this.eatSandGoal);
 		this.goalSelector.addGoal(6, new WaterAvoidingRandomStrollGoal(this, 1.0D));
@@ -83,6 +87,11 @@ public class CactusSheepEntity extends Animal implements IShearable, ICactusMob 
 	protected void customServerAiStep() {
 		this.sheepTimer = this.eatSandGoal.getEatingSandTimer();
 		super.customServerAiStep();
+	}
+
+	@Override
+	public boolean isFood(ItemStack stack) {
+		return stack.is(ItemTags.SHEEP_FOOD);
 	}
 
 	/**
@@ -102,9 +111,10 @@ public class CactusSheepEntity extends Animal implements IShearable, ICactusMob 
 		return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 8.0D).add(Attributes.MOVEMENT_SPEED, (double) 0.23F);
 	}
 
-	protected void defineSynchedData() {
-		super.defineSynchedData();
-		this.entityData.define(SHEARED, false);
+	@Override
+	protected void defineSynchedData(SynchedEntityData.Builder builder) {
+		super.defineSynchedData(builder);
+		builder.define(SHEARED, false);
 	}
 
 	@Override
@@ -230,17 +240,17 @@ public class CactusSheepEntity extends Animal implements IShearable, ICactusMob 
 	}
 
 	@Override
-	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
-		return 0.95F * sizeIn.height;
+	public float getEyeHeightAccess(Pose pose) {
+		return 0.95F * this.getBbHeight();
 	}
 
 	@Override
 	@Nullable
-	protected ResourceLocation getDefaultLootTable() {
+	protected ResourceKey<LootTable> getDefaultLootTable() {
 		if (this.getSheared())
-			return new ResourceLocation(Reference.MOD_ID, "entities/cactus_sheep");
+			return ResourceKey.create(Registries.LOOT_TABLE, new ResourceLocation(Reference.MOD_ID, "entities/cactus_sheep"));
 		else
-			return new ResourceLocation(Reference.MOD_ID, "entities/cactus_sheep1");
+			return ResourceKey.create(Registries.LOOT_TABLE, new ResourceLocation(Reference.MOD_ID, "entities/cactus_sheep1"));
 	}
 
 	@Override
@@ -252,6 +262,6 @@ public class CactusSheepEntity extends Animal implements IShearable, ICactusMob 
 	}
 
 	public static boolean canAnimalSpawn(EntityType<? extends Animal> animal, LevelAccessor level, MobSpawnType reason, BlockPos pos, RandomSource random) {
-		return level.getBlockState(pos.below()).is(Tags.Blocks.SAND) && level.getRawBrightness(pos, 0) > 8;
+		return level.getBlockState(pos.below()).is(Tags.Blocks.SANDS) && level.getRawBrightness(pos, 0) > 8;
 	}
 }

@@ -36,7 +36,7 @@ public class EatSandGoal extends Goal {
 			return false;
 		} else {
 			BlockPos blockpos = this.sandEaterEntity.blockPosition();
-			return this.level.getBlockState(blockpos.below()).is(Tags.Blocks.SAND);
+			return this.level.getBlockState(blockpos.below()).is(Tags.Blocks.SANDS);
 		}
 	}
 
@@ -63,8 +63,8 @@ public class EatSandGoal extends Goal {
 		this.eatingSandTimer = Math.max(0, this.eatingSandTimer - 1);
 		if (this.eatingSandTimer == 4) {
 			BlockPos blockpos = this.sandEaterEntity.blockPosition();
-			if (this.level.getBlockState(blockpos).is(Tags.Blocks.SAND)) {
-				if (EventHooks.getMobGriefingEvent(this.level, this.sandEaterEntity)) {
+			if (this.level.getBlockState(blockpos).is(Tags.Blocks.SANDS)) {
+				if (EventHooks.canEntityGrief(this.level, this.sandEaterEntity)) {
 					this.level.destroyBlock(blockpos, false);
 				}
 
@@ -72,8 +72,8 @@ public class EatSandGoal extends Goal {
 			} else {
 				BlockPos blockpos1 = blockpos.below();
 				BlockState state = this.level.getBlockState(blockpos1);
-				if (state.is(Tags.Blocks.SAND)) {
-					if (EventHooks.getMobGriefingEvent(this.level, this.sandEaterEntity)) {
+				if (state.is(Tags.Blocks.SANDS)) {
+					if (EventHooks.canEntityGrief(this.level, this.sandEaterEntity)) {
 						this.level.levelEvent(2001, blockpos1, Block.getId(state));
 						this.level.setBlock(blockpos1, state, 2);
 					}

@@ -53,9 +53,7 @@ public class CactusSnowGolemEntity extends AbstractGolem implements RangedAttack
 		this.goalSelector.addGoal(2, new WaterAvoidingRandomStrollGoal(this, 1.0D, 1.0000001E-5F));
 		this.goalSelector.addGoal(3, new LookAtPlayerGoal(this, Player.class, 6.0F));
 		this.goalSelector.addGoal(4, new RandomLookAroundGoal(this));
-		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Mob.class, 10, true, false, (p_213621_0_) -> {
-			return p_213621_0_ instanceof Enemy;
-		}));
+		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Mob.class, 10, true, false, (p_213621_0_) -> p_213621_0_ instanceof Enemy));
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {
@@ -63,9 +61,9 @@ public class CactusSnowGolemEntity extends AbstractGolem implements RangedAttack
 	}
 
 	@Override
-	protected void defineSynchedData() {
-		super.defineSynchedData();
-		this.entityData.define(CACTUS_EQUIPPED, (byte) 16);
+	protected void defineSynchedData(SynchedEntityData.Builder builder) {
+		super.defineSynchedData(builder);
+		builder.define(CACTUS_EQUIPPED, (byte) 16);
 	}
 
 	public void addAdditionalSaveData(CompoundTag compound) {
@@ -97,7 +95,7 @@ public class CactusSnowGolemEntity extends AbstractGolem implements RangedAttack
 				this.hurt(damageSources().onFire(), 1.0F);
 			}
 
-			if (!EventHooks.getMobGriefingEvent(this.level(), this)) {
+			if (!EventHooks.canEntityGrief(this.level(), this)) {
 				return;
 			}
 

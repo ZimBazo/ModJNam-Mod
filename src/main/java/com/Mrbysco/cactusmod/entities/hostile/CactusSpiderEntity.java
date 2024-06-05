@@ -31,9 +31,9 @@ public class CactusSpiderEntity extends Spider implements ICactusMob {
 	}
 
 	@Override
-	protected void defineSynchedData() {
-		super.defineSynchedData();
-		this.entityData.define(SPIDER_SIZE, 1);
+	protected void defineSynchedData(SynchedEntityData.Builder builder) {
+		super.defineSynchedData(builder);
+		builder.define(SPIDER_SIZE, 1);
 	}
 
 	@Override
@@ -135,9 +135,9 @@ public class CactusSpiderEntity extends Spider implements ICactusMob {
 		super.remove(reason);
 	}
 
-	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficultyIn, MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn, @Nullable CompoundTag dataTag) {
+	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficultyIn, MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn) {
 		this.setSpiderSize(4, true);
-		return super.finalizeSpawn(level, difficultyIn, reason, spawnDataIn, dataTag);
+		return super.finalizeSpawn(level, difficultyIn, reason, spawnDataIn);
 	}
 
 	@Override

@@ -30,7 +30,7 @@ public class CactusFlowerBlock extends Block {
 	public CactusFlowerBlock(Supplier<CactusPlantBlock> plantBlock, BlockBehaviour.Properties builder) {
 		super(builder);
 		this.plantBlock = plantBlock;
-		this.registerDefaultState(this.stateDefinition.any().setValue(AGE, Integer.valueOf(0)));
+		this.registerDefaultState(this.stateDefinition.any().setValue(AGE, 0));
 	}
 
 	@Override
@@ -50,11 +50,11 @@ public class CactusFlowerBlock extends Block {
 		BlockPos blockpos = pos.above();
 		if (level.isEmptyBlock(blockpos) && blockpos.getY() < 256) {
 			int i = state.getValue(AGE);
-			if (i < 5 && CommonHooks.onCropsGrowPre(level, blockpos, state, true)) {
+			if (i < 5 && CommonHooks.canCropGrow(level, blockpos, state, true)) {
 				boolean flag = false;
 				boolean flag1 = false;
 				BlockState blockstate = level.getBlockState(pos.below());
-				if (blockstate.is(Tags.Blocks.SAND)) {
+				if (blockstate.is(Tags.Blocks.SANDS)) {
 					flag = true;
 				} else if (blockstate.is(this.plantBlock.get())) {
 					int j = 1;
@@ -62,7 +62,7 @@ public class CactusFlowerBlock extends Block {
 					for (int k = 0; k < 4; ++k) {
 						BlockState blockstate1 = level.getBlockState(pos.below(j + 1));
 						if (!blockstate1.is(this.plantBlock.get())) {
-							if (blockstate1.is(Tags.Blocks.SAND)) {
+							if (blockstate1.is(Tags.Blocks.SANDS)) {
 								flag1 = true;
 							}
 							break;
@@ -106,18 +106,18 @@ public class CactusFlowerBlock extends Block {
 				} else {
 					this.placeDeadFlower(level, pos);
 				}
-				CommonHooks.onCropsGrowPost(level, pos, state);
+				CommonHooks.fireCropGrowPost(level, pos, state);
 			}
 		}
 	}
 
 	private void placeGrownFlower(Level level, BlockPos pos, int age) {
-		level.setBlock(pos, this.defaultBlockState().setValue(AGE, Integer.valueOf(age)), 2);
+		level.setBlock(pos, this.defaultBlockState().setValue(AGE, age), 2);
 		level.levelEvent(1033, pos, 0);
 	}
 
 	private void placeDeadFlower(Level level, BlockPos pos) {
-		level.setBlock(pos, this.defaultBlockState().setValue(AGE, Integer.valueOf(5)), 2);
+		level.setBlock(pos, this.defaultBlockState().setValue(AGE, 5), 2);
 		level.levelEvent(1034, pos, 0);
 	}
 
@@ -142,7 +142,7 @@ public class CactusFlowerBlock extends Block {
 	@Override
 	public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
 		BlockState blockstate = level.getBlockState(pos.below());
-		if (!blockstate.is(this.plantBlock.get()) && !blockstate.is(Tags.Blocks.SAND)) {
+		if (!blockstate.is(this.plantBlock.get()) && !blockstate.is(Tags.Blocks.SANDS)) {
 			if (!blockstate.isAir()) {
 				return false;
 			} else {
@@ -215,7 +215,7 @@ public class CactusFlowerBlock extends Block {
 		}
 
 		if (!flag) {
-			level.setBlock(branchPos.above(i), CactusRegistry.CACTUS_FLOWER.get().defaultBlockState().setValue(AGE, Integer.valueOf(5)), 2);
+			level.setBlock(branchPos.above(i), CactusRegistry.CACTUS_FLOWER.get().defaultBlockState().setValue(AGE, 5), 2);
 		}
 	}
 

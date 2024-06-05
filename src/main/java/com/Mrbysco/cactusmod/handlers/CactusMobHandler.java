@@ -40,9 +40,7 @@ public class CactusMobHandler {
 
 					int i = level.random.nextInt(4);
 					ItemStack stack = armorList.get(i);
-					stack.hurtAndBreak(level.random.nextInt(2), player, (p_214023_1_) -> {
-						player.broadcastBreakEvent(EquipmentSlot.byTypeAndIndex(EquipmentSlot.Type.ARMOR, i));
-					});
+					stack.hurtAndBreak(level.random.nextInt(2), player, Player.getEquipmentSlotForItem(stack));
 					event.setCanceled(true);
 				}
 			}

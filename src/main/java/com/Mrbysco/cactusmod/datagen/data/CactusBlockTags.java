@@ -4,6 +4,7 @@ import com.mrbysco.cactusmod.Reference;
 import com.mrbysco.cactusmod.init.CactusTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
+import net.minecraft.tags.BlockTags;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
@@ -17,6 +18,6 @@ public class CactusBlockTags extends BlockTagsProvider {
 
 	@Override
 	protected void addTags(HolderLookup.Provider provider) {
-		this.tag(CactusTags.NEEDS_CACTUS_TOOL);
+		this.tag(CactusTags.INCORRECT_FOR_CACTUS_TOOL).addTag(BlockTags.INCORRECT_FOR_WOODEN_TOOL);
 	}
 }

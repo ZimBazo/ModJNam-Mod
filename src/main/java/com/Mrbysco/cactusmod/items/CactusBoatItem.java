@@ -39,8 +39,8 @@ public class CactusBoatItem extends Item {
 				Vec3 vector3d1 = playerIn.getEyePosition(1.0F);
 
 				for (Entity entity : list) {
-					AABB axisalignedbb = entity.getBoundingBox().inflate((double) entity.getPickRadius());
-					if (axisalignedbb.contains(vector3d1)) {
+					AABB aabb = entity.getBoundingBox().inflate((double) entity.getPickRadius());
+					if (aabb.contains(vector3d1)) {
 						return InteractionResultHolder.pass(itemstack);
 					}
 				}

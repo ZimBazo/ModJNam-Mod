@@ -1,6 +1,6 @@
 {
   "type": "neoforge:add_spawns",
-  "biomes": "#forge:is_sandy",
+  "biomes": "#c:is_sandy",
   "spawners": {
     "type": "cactusmod:cactus_skeleton",
     "maxCount": 4,

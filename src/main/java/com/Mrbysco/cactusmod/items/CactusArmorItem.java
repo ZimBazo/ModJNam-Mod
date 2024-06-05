@@ -1,6 +1,7 @@
 package com.mrbysco.cactusmod.items;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -12,13 +13,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
 public class CactusArmorItem extends ArmorItem {
 
-	public CactusArmorItem(ArmorMaterial materialIn, ArmorItem.Type slot, Item.Properties builderIn) {
+	public CactusArmorItem(Holder<ArmorMaterial> materialIn, ArmorItem.Type slot, Item.Properties builderIn) {
 		super(materialIn, slot, builderIn);
 	}
 
@@ -38,8 +38,8 @@ public class CactusArmorItem extends ArmorItem {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flagIn) {
-		super.appendHoverText(stack, level, tooltip, flagIn);
+	public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
+		super.appendHoverText(stack, context, tooltip, flag);
 		tooltip.add(Component.translatable("cactus.armor.text").withStyle(ChatFormatting.GREEN));
 	}
 }

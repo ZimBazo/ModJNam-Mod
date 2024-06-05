@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.state.BlockState;
 public class CactusAxeItem extends AxeItem {
 
 	public CactusAxeItem(Tier tier, float attackDamageIn, float attackSpeedIn, Item.Properties builder) {
-		super(tier, attackDamageIn, attackSpeedIn, builder);
+		super(tier, builder.attributes(AxeItem.createAttributes(tier, attackDamageIn, attackSpeedIn)));
 	}
 
 	@Override

@@ -22,8 +22,9 @@ public class CactusGolemRenderer extends MobRenderer<CactusGolem, IronGolemModel
 		return texture;
 	}
 
-	protected void setupRotations(CactusGolem cactusGolem, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTicks) {
-		super.setupRotations(cactusGolem, poseStack, ageInTicks, rotationYaw, partialTicks);
+	@Override
+	protected void setupRotations(CactusGolem cactusGolem, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTicks, float pScale) {
+		super.setupRotations(cactusGolem, poseStack, ageInTicks, rotationYaw, partialTicks, pScale);
 		if (!((double) cactusGolem.walkAnimation.speed() < 0.01D)) {
 			float f = 13.0F;
 			float f1 = cactusGolem.walkAnimation.position(partialTicks) + 6.0F;

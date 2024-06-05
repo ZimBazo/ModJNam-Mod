@@ -8,8 +8,8 @@ import net.minecraft.world.item.context.UseOnContext;
 
 public class CactusHoeItem extends HoeItem {
 
-	public CactusHoeItem(Tier itemTier, int attackDamage, float attackSpeed, Item.Properties properties) {
-		super(itemTier, attackDamage, attackSpeed, properties);
+	public CactusHoeItem(Tier tier, int attackDamage, float attackSpeed, Item.Properties builder) {
+		super(tier, builder.attributes(HoeItem.createAttributes(tier, attackDamage, attackSpeed)));
 	}
 
 	@Override

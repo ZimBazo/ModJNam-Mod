@@ -41,9 +41,7 @@ public class CarvedCactusBlock extends BlockRotatable {
 	@Nullable
 	private BlockPattern cactusIronGolemFull;
 
-	private static final Predicate<BlockState> CARVED_PREDICATE = (state) -> {
-		return state != null && (state.is(CactusRegistry.CARVED_CACTUS.get()) || state.is(CactusRegistry.JACKO_CACTUS.get()));
-	};
+	private static final Predicate<BlockState> CARVED_PREDICATE = (state) -> state != null && (state.is(CactusRegistry.CARVED_CACTUS.get()) || state.is(CactusRegistry.JACKO_CACTUS.get()));
 
 	@Override
 	protected MapCodec<? extends HorizontalDirectionalBlock> codec() {
@@ -151,9 +149,7 @@ public class CarvedCactusBlock extends BlockRotatable {
 
 	private BlockPattern getOrCreateCactusIronGolemBase() {
 		if (this.cactusIronGolemBase == null) {
-			this.cactusIronGolemBase = BlockPatternBuilder.start().aisle("~ ~", "###", "~#~").where('#', BlockInWorld.hasState(BlockStatePredicate.forBlock(CactusRegistry.PRICKLY_IRON.get()))).where('~', (blockInWorld) -> {
-				return blockInWorld.getState().isAir();
-			}).build();
+			this.cactusIronGolemBase = BlockPatternBuilder.start().aisle("~ ~", "###", "~#~").where('#', BlockInWorld.hasState(BlockStatePredicate.forBlock(CactusRegistry.PRICKLY_IRON.get()))).where('~', (blockInWorld) -> blockInWorld.getState().isAir()).build();
 		}
 
 		return this.cactusIronGolemBase;
@@ -161,9 +157,7 @@ public class CarvedCactusBlock extends BlockRotatable {
 
 	private BlockPattern getOrCreateCactusIronGolemFull() {
 		if (this.cactusIronGolemFull == null) {
-			this.cactusIronGolemFull = BlockPatternBuilder.start().aisle("~^~", "###", "~#~").where('^', BlockInWorld.hasState(CARVED_PREDICATE)).where('#', BlockInWorld.hasState(BlockStatePredicate.forBlock(CactusRegistry.PRICKLY_IRON.get()))).where('~', (blockInWorld) -> {
-				return blockInWorld.getState().isAir();
-			}).build();
+			this.cactusIronGolemFull = BlockPatternBuilder.start().aisle("~^~", "###", "~#~").where('^', BlockInWorld.hasState(CARVED_PREDICATE)).where('#', BlockInWorld.hasState(BlockStatePredicate.forBlock(CactusRegistry.PRICKLY_IRON.get()))).where('~', (blockInWorld) -> blockInWorld.getState().isAir()).build();
 		}
 
 		return this.cactusIronGolemFull;

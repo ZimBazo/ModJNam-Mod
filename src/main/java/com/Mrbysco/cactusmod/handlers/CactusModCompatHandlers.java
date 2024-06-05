@@ -15,6 +15,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModList;
+import net.neoforged.neoforge.event.EventHooks;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 public class CactusModCompatHandlers {
@@ -33,7 +34,7 @@ public class CactusModCompatHandlers {
 					if (cactoni != null) {
 						cactoni.absMoveTo(target.getX(), target.getY(), target.getZ(), target.getYRot(), target.getXRot());
 						level.addFreshEntity(cactoni);
-						cactoni.finalizeSpawn((ServerLevel) level, level.getCurrentDifficultyAt(target.blockPosition()), MobSpawnType.CONVERSION, null, null);
+						EventHooks.finalizeMobSpawn(cactoni, (ServerLevel) level, level.getCurrentDifficultyAt(target.blockPosition()), MobSpawnType.CONVERSION, null);
 						target.discard();
 
 						if (!player.getAbilities().instabuild)

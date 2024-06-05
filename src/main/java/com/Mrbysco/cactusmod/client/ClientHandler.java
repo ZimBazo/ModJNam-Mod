@@ -35,6 +35,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 
 public class ClientHandler {
 	public static final ModelLayerLocation CACTONI = new ModelLayerLocation(new ResourceLocation(Reference.MOD_ID, "cactoni"), "cactoni");
@@ -48,8 +49,6 @@ public class ClientHandler {
 		ItemBlockRenderTypes.setRenderLayer(CactusRegistry.CARVED_CACTUS.get(), RenderType.cutout());
 		ItemBlockRenderTypes.setRenderLayer(CactusRegistry.JACKO_CACTUS.get(), RenderType.cutout());
 
-		MenuScreens.register(CactusRegistry.CACTUS_WORKBENCH_CONTAINER.get(), new Factory());
-
 		event.enqueueWork(() -> {
 			ItemProperties.register(CactusRegistry.CACTUS_BOW.get(), new ResourceLocation("pull"), (stack, level, entity, i) -> {
 				if (entity == null) {
@@ -61,6 +60,10 @@ public class ClientHandler {
 			ItemProperties.register(CactusRegistry.CACTUS_BOW.get(), new ResourceLocation("pulling"), (stack, level, entity, i) -> entity != null &&
 					entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F);
 		});
+	}
+
+	public static void registerMenuScreens(RegisterMenuScreensEvent event) {
+		event.register(CactusRegistry.CACTUS_WORKBENCH_CONTAINER.get(), new Factory());
 	}
 
 	public static void registerEntityRenders(EntityRenderersEvent.RegisterRenderers event) {
@@ -83,10 +86,10 @@ public class ClientHandler {
 	}
 
 	public static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {
-		event.registerLayerDefinition(CACTONI, () -> CactoniModel.createBodyLayer());
-		event.registerLayerDefinition(CACTUS_SPIDER, () -> CactusSpiderModel.createSpiderBodyLayer());
-		event.registerLayerDefinition(CACTUS_SHEEP, () -> CactusSheepModel.createBodyLayer());
-		event.registerLayerDefinition(CACTUS_SHEEP_WOOL, () -> CactusWoolModel.createFurLayer());
+		event.registerLayerDefinition(CACTONI, CactoniModel::createBodyLayer);
+		event.registerLayerDefinition(CACTUS_SPIDER, CactusSpiderModel::createSpiderBodyLayer);
+		event.registerLayerDefinition(CACTUS_SHEEP, CactusSheepModel::createBodyLayer);
+		event.registerLayerDefinition(CACTUS_SHEEP_WOOL, CactusWoolModel::createFurLayer);
 	}
 
 	private static class Factory implements ScreenConstructor {

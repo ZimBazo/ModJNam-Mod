@@ -31,6 +31,6 @@ public class CactusPigEntity extends Pig implements ICactusMob {
 	}
 
 	public static boolean canAnimalSpawn(EntityType<? extends Animal> animal, LevelAccessor level, MobSpawnType reason, BlockPos pos, RandomSource random) {
-		return level.getBlockState(pos.below()).is(Blocks.SAND) && level.getRawBrightness(pos, 0) > 8;
+		return level.getBlockState(pos.below()).is(Blocks.SANDS) && level.getRawBrightness(pos, 0) > 8;
 	}
 }

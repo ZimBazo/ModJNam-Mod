@@ -23,7 +23,7 @@ public class ExplosionHelper {
 	public static void arrowExplosion(@Nullable Entity entityIn, double x, double y, double z, float strength, boolean isSmoking) {
 		Level level = entityIn.level();
 		if (level.isClientSide) {
-			level.playLocalSound(x, y, z, SoundEvents.GENERIC_EXPLODE, SoundSource.BLOCKS, 4.0F, (1.0F + (level.random.nextFloat() - level.random.nextFloat()) * 0.2F) * 0.7F, false);
+			level.playLocalSound(x, y, z, SoundEvents.GENERIC_EXPLODE.value(), SoundSource.BLOCKS, 4.0F, (1.0F + (level.random.nextFloat() - level.random.nextFloat()) * 0.2F) * 0.7F, false);
 		}
 		level.addParticle(ParticleTypes.EXPLOSION, x, y, z, 1.0D, 0.0D, 0.0D);
 

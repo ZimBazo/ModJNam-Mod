@@ -4,6 +4,7 @@ import com.mrbysco.cactusmod.entities.CactiCartEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.dispenser.BlockSource;
 import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.core.dispenser.DispenseItemBehavior;
@@ -20,7 +21,6 @@ import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.RailShape;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -63,7 +63,7 @@ public class CactusCartItem extends Item {
 			}
 
 			CactiCartEntity cactusCart = new CactiCartEntity(level, d0, d1 + d3, d2);
-			if (stack.hasCustomHoverName()) {
+			if (stack.has(DataComponents.CUSTOM_NAME)) {
 				cactusCart.setCustomName(stack.getHoverName());
 			}
 
@@ -103,7 +103,7 @@ public class CactusCartItem extends Item {
 				}
 
 				CactiCartEntity cactusCart = new CactiCartEntity(level, (double) blockpos.getX() + 0.5D, (double) blockpos.getY() + 0.0625D + d0, (double) blockpos.getZ() + 0.5D);
-				if (itemstack.hasCustomHoverName()) {
+				if (itemstack.has(DataComponents.CUSTOM_NAME)) {
 					cactusCart.setCustomName(itemstack.getHoverName());
 				}
 
@@ -116,8 +116,8 @@ public class CactusCartItem extends Item {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flagIn) {
-		super.appendHoverText(stack, level, tooltip, flagIn);
+	public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
+		super.appendHoverText(stack, context, tooltip, flag);
 		tooltip.add(Component.translatable("cactus.cart.info").withStyle(ChatFormatting.GREEN));
 	}
 }

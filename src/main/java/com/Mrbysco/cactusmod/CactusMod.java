@@ -20,12 +20,12 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.common.NeoForge;
 import org.slf4j.Logger;
 
@@ -33,8 +33,8 @@ import org.slf4j.Logger;
 public class CactusMod {
 	public static final Logger logger = LogUtils.getLogger();
 
-	public CactusMod(IEventBus eventBus) {
-		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, CactusConfig.commonSpec);
+	public CactusMod(IEventBus eventBus, ModContainer container, Dist dist) {
+		container.registerConfig(ModConfig.Type.COMMON, CactusConfig.commonSpec);
 		eventBus.register(CactusConfig.class);
 
 		eventBus.addListener(this::setup);
@@ -57,35 +57,34 @@ public class CactusMod {
 		NeoForge.EVENT_BUS.register(new CactusMobHandler());
 		NeoForge.EVENT_BUS.register(new CactusModCompatHandlers());
 
-		if (FMLEnvironment.dist.isClient()) {
+		if (dist.isClient()) {
 			eventBus.addListener(ClientHandler::registerRenders);
+			eventBus.addListener(ClientHandler::registerMenuScreens);
 			eventBus.addListener(ClientHandler::registerEntityRenders);
 			eventBus.addListener(ClientHandler::registerLayerDefinitions);
 		}
 	}
 
 	private void setup(final FMLCommonSetupEvent event) {
-		event.enqueueWork(() -> {
-			DispenserBlock.registerBehavior(CactusRegistry.CARVED_CACTUS.get(), new OptionalDispenseItemBehavior() {
-				protected ItemStack execute(BlockSource source, ItemStack stack) {
-					Level level = source.level();
-					BlockPos blockpos = source.pos().relative(source.state().getValue(DispenserBlock.FACING));
-					CarvedCactusBlock carvedCactusBlock = CactusRegistry.CARVED_CACTUS.get();
-					if (level.isEmptyBlock(blockpos) && carvedCactusBlock.canSpawnGolem(level, blockpos)) {
-						if (!level.isClientSide) {
-							level.setBlock(blockpos, carvedCactusBlock.defaultBlockState(), 3);
-							level.gameEvent((Entity) null, GameEvent.BLOCK_PLACE, blockpos);
-						}
-
-						stack.shrink(1);
-						this.setSuccess(true);
-					} else {
-						this.setSuccess(ArmorItem.dispenseArmor(source, stack));
+		event.enqueueWork(() -> DispenserBlock.registerBehavior(CactusRegistry.CARVED_CACTUS.get(), new OptionalDispenseItemBehavior() {
+			protected ItemStack execute(BlockSource source, ItemStack stack) {
+				Level level = source.level();
+				BlockPos blockpos = source.pos().relative(source.state().getValue(DispenserBlock.FACING));
+				CarvedCactusBlock carvedCactusBlock = CactusRegistry.CARVED_CACTUS.get();
+				if (level.isEmptyBlock(blockpos) && carvedCactusBlock.canSpawnGolem(level, blockpos)) {
+					if (!level.isClientSide) {
+						level.setBlock(blockpos, carvedCactusBlock.defaultBlockState(), 3);
+						level.gameEvent((Entity) null, GameEvent.BLOCK_PLACE, blockpos);
 					}
 
-					return stack;
+					stack.shrink(1);
+					this.setSuccess(true);
+				} else {
+					this.setSuccess(ArmorItem.dispenseArmor(source, stack));
 				}
-			});
-		});
+
+				return stack;
+			}
+		}));
 	}
 }

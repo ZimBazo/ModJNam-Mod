@@ -11,6 +11,7 @@ import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.ContainerLevelAccess;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.CraftingTableBlock;
@@ -36,7 +37,7 @@ public class BlockCactusWorkbench extends CraftingTableBlock {
 	}
 
 	@Override
-	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+	protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult result) {
 		if (level.isClientSide) {
 			return InteractionResult.SUCCESS;
 		} else {
@@ -50,8 +51,6 @@ public class BlockCactusWorkbench extends CraftingTableBlock {
 
 	@Override
 	public MenuProvider getMenuProvider(BlockState state, Level level, BlockPos pos) {
-		return new SimpleMenuProvider((id, inventory, player) -> {
-			return new CactusWorkbenchContainer(id, inventory, ContainerLevelAccess.create(level, pos));
-		}, CONTAINER_NAME);
+		return new SimpleMenuProvider((id, inventory, player) -> new CactusWorkbenchContainer(id, inventory, ContainerLevelAccess.create(level, pos)), CONTAINER_NAME);
 	}
 }

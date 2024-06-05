@@ -6,7 +6,7 @@ import com.mrbysco.cactusmod.init.CactusRegistry;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.worldgen.BootstapContext;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.biome.Biome;
@@ -34,11 +34,11 @@ public class CactusBiomeModifiers {
 		return ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS, new ResourceLocation(Reference.MOD_ID, name));
 	}
 
-	public static void bootstrap(BootstapContext<BiomeModifier> context) {
-		HolderGetter<Biome> biomeGetter = context.lookup(Registries.BIOME);
+	public static void bootstrap(BootstrapContext<BiomeModifier> context) {
+		HolderGetter<Biome> biomeHolderGetter = context.lookup(Registries.BIOME);
 		HolderGetter<PlacedFeature> placedGetter = context.lookup(Registries.PLACED_FEATURE);
 
-		var sandyTag = biomeGetter.getOrThrow(Tags.Biomes.IS_SANDY);
+		var sandyTag = biomeHolderGetter.getOrThrow(Tags.Biomes.IS_SANDY);
 
 		context.register(ADD_CACTUS_PLANT, new BiomeModifiers.AddFeaturesBiomeModifier(
 				sandyTag,

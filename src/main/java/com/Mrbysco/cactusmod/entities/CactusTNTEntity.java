@@ -40,8 +40,8 @@ public class CactusTNTEntity extends Entity {
 	}
 
 	@Override
-	protected void defineSynchedData() {
-		this.entityData.define(FUSE, Integer.valueOf(80));
+	protected void defineSynchedData(SynchedEntityData.Builder builder) {
+		builder.define(FUSE, 80);
 	}
 
 	@Override

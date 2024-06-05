@@ -7,6 +7,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -34,7 +35,7 @@ public class CactusDispenserBlock extends Block {
 
 	public CactusDispenserBlock(BlockBehaviour.Properties builder) {
 		super(builder);
-		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(TRIGGERED, Boolean.valueOf(false)));
+		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(TRIGGERED, Boolean.FALSE));
 	}
 
 	@Override
@@ -69,9 +70,9 @@ public class CactusDispenserBlock extends Block {
 		boolean flag1 = state.getValue(TRIGGERED);
 		if (flag && !flag1) {
 			level.scheduleTick(pos, this, 4);
-			level.setBlock(pos, state.setValue(TRIGGERED, Boolean.valueOf(true)), 4);
+			level.setBlock(pos, state.setValue(TRIGGERED, Boolean.TRUE), 4);
 		} else if (!flag && flag1) {
-			level.setBlock(pos, state.setValue(TRIGGERED, Boolean.valueOf(false)), 4);
+			level.setBlock(pos, state.setValue(TRIGGERED, Boolean.FALSE), 4);
 		}
 	}
 
@@ -100,8 +101,8 @@ public class CactusDispenserBlock extends Block {
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable BlockGetter level, List<Component> tooltip, TooltipFlag flagIn) {
-		super.appendHoverText(stack, level, tooltip, flagIn);
+	public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltip, TooltipFlag flagIn) {
+		super.appendHoverText(stack, context, tooltip, flagIn);
 		tooltip.add(Component.translatable("cactus.dispenser.info").withStyle(ChatFormatting.GREEN));
 	}
 }

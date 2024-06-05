@@ -1,6 +1,6 @@
 {
   "type": "neoforge:add_features",
-  "biomes": "#forge:is_sandy",
+  "biomes": "#c:is_sandy",
   "features": "cactusmod:cactus_plant",
   "step": "vegetal_decoration"
 }

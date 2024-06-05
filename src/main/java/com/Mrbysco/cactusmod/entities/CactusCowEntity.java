@@ -102,10 +102,10 @@ public class CactusCowEntity extends Cow implements IShearable, ICactusMob {
 	}
 
 	protected float getStandingEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
-		return this.isBaby() ? sizeIn.height * 0.95F : 1.3F;
+		return this.isBaby() ? sizeIn.height() * 0.95F : 1.3F;
 	}
 
 	public static boolean canAnimalSpawn(EntityType<? extends Animal> animal, LevelAccessor level, MobSpawnType reason, BlockPos pos, RandomSource random) {
-		return level.getBlockState(pos.below()).is(Tags.Blocks.SAND) && level.getRawBrightness(pos, 0) > 8;
+		return level.getBlockState(pos.below()).is(Tags.Blocks.SANDS) && level.getRawBrightness(pos, 0) > 8;
 	}
 }

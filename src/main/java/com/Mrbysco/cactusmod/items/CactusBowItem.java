@@ -18,7 +18,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -59,9 +58,7 @@ public class CactusBowItem extends BowItem {
 					spike.setDamage(0D);
 					spike.setKnockbackStrength(3);
 
-					stack.hurtAndBreak(1, player, (p_220009_1_) -> {
-						p_220009_1_.broadcastBreakEvent(player.getUsedItemHand());
-					});
+					stack.hurtAndBreak(1, player, Player.getSlotForHand(player.getUsedItemHand()));
 
 					level.addFreshEntity(spike);
 				}
@@ -95,12 +92,12 @@ public class CactusBowItem extends BowItem {
 	public InteractionResultHolder<ItemStack> use(Level level, Player playerIn, InteractionHand handIn) {
 		ItemStack itemstack = playerIn.getItemInHand(handIn);
 		playerIn.startUsingItem(handIn);
-		return new InteractionResultHolder<ItemStack>(InteractionResult.SUCCESS, itemstack);
+		return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemstack);
 	}
 
 	@Override
-	public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltip, TooltipFlag flagIn) {
-		super.appendHoverText(stack, level, tooltip, flagIn);
+	public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
+		super.appendHoverText(stack, context, tooltip, flag);
 		tooltip.add(Component.translatable("cactus.bow.text").withStyle(ChatFormatting.GREEN));
 	}
 }

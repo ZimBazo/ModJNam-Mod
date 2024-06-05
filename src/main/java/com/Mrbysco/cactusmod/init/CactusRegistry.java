@@ -94,12 +94,10 @@ public class CactusRegistry {
 
 	public static final DeferredBlock<PricklyIronBlock> PRICKLY_IRON = BLOCKS.register("prickly_iron", () -> new PricklyIronBlock(BlockBehaviour.Properties.of().mapColor(MapColor.METAL).strength(2.0F, 7.0F).sound(SoundType.METAL)));
 	public static final DeferredBlock<Block> CACTUS_BRICK_BLOCK = BLOCKS.register("cactus_brick_block", () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).strength(0.4F).sound(SoundType.WOOL)));
-	public static final DeferredBlock<StairBlock> CACTUS_BRICK_STAIR = BLOCKS.register("cactus_brick_stair", () -> new StairBlock(() -> CACTUS_BRICK_BLOCK.get().defaultBlockState(), BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).strength(0.4F).sound(SoundType.WOOL)));
+	public static final DeferredBlock<StairBlock> CACTUS_BRICK_STAIR = BLOCKS.register("cactus_brick_stair", () -> new StairBlock(CACTUS_BRICK_BLOCK.get().defaultBlockState(), BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).strength(0.4F).sound(SoundType.WOOL)));
 	public static final DeferredBlock<SlabBlock> CACTUS_BRICK_SLAB = BLOCKS.register("cactus_brick_slab", () -> new SlabBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).strength(0.4F).sound(SoundType.WOOL)));
 	public static final DeferredBlock<CarvedCactusBlock> CARVED_CACTUS = BLOCKS.register("carved_cactus", () -> new CarvedCactusBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).strength(0.4F).sound(SoundType.WOOL)));
-	public static final DeferredBlock<CarvedCactusBlock> JACKO_CACTUS = BLOCKS.register("jacko_cactus", () -> new CarvedCactusBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).strength(0.4F).sound(SoundType.WOOL).lightLevel((state) -> {
-		return 15;
-	})));
+	public static final DeferredBlock<CarvedCactusBlock> JACKO_CACTUS = BLOCKS.register("jacko_cactus", () -> new CarvedCactusBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).strength(0.4F).sound(SoundType.WOOL).lightLevel((state) -> 15)));
 	public static final DeferredBlock<PunjiCactusBlock> CACTUS_CARPET = BLOCKS.register("cactus_carpet", () -> new PunjiCactusBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).strength(0.25F).sound(SoundType.WOOL)));
 	public static final DeferredBlock<CactusCakeBlock> CACTUS_CAKE = BLOCKS.register("cactus_cake", () -> new CactusCakeBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).strength(0.5F).sound(SoundType.WOOL)));
 	public static final DeferredBlock<CactusDispenserBlock> CACTUS_DISPENSER = BLOCKS.register("cactus_dispenser", () -> new CactusDispenserBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).strength(0.4F).sound(SoundType.WOOL)));
@@ -110,7 +108,7 @@ public class CactusRegistry {
 	public static final DeferredBlock<CactusDoorBlock> CACTUS_DOOR = BLOCKS.register("cactus_door", () -> new CactusDoorBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).strength(0.4F).sound(SoundType.WOOL).noOcclusion()));
 	public static final DeferredBlock<CactusSlimeBlock> CACTUS_SLIME_BLOCK = BLOCKS.register("cactus_slime_block", () -> new CactusSlimeBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).strength(0.25F).sound(SoundType.SLIME_BLOCK).noOcclusion()));
 	public static final DeferredBlock<CactusPlantBlock> CACTUS_PLANT = BLOCKS.register("cactus_plant", () -> new CactusPlantBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).strength(0.4F).sound(SoundType.WOOL).noOcclusion()));
-	public static final DeferredBlock<CactusFlowerBlock> CACTUS_FLOWER = BLOCKS.register("cactus_flower", () -> new CactusFlowerBlock(() -> CACTUS_PLANT.get(), BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).strength(0.4F).sound(SoundType.WOOD).randomTicks().noOcclusion()));
+	public static final DeferredBlock<CactusFlowerBlock> CACTUS_FLOWER = BLOCKS.register("cactus_flower", () -> new CactusFlowerBlock(CACTUS_PLANT::get, BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).strength(0.4F).sound(SoundType.WOOD).randomTicks().noOcclusion()));
 
 	public static final Supplier<BlockEntityType<CactusChestBlockEntity>> CACTUS_CHEST_BLOCK_ENTITY = BLOCK_ENTITIES.register("cactus_chest", () -> BlockEntityType.Builder.of(CactusChestBlockEntity::new, CACTUS_CHEST.get()).build(null));
 	public static final Supplier<BlockEntityType<CactusHopperBlockEntity>> CACTUS_HOPPER_BLOCK_ENTITY = BLOCK_ENTITIES.register("cactus_hopper", () -> BlockEntityType.Builder.of(CactusHopperBlockEntity::new, CACTUS_HOPPER.get()).build(null));

@@ -97,9 +97,9 @@ public abstract class AbstractSpikeEntity extends Projectile {
 	}
 
 	@Override
-	protected void defineSynchedData() {
-		this.entityData.define(CRITICAL, (byte) 0);
-		this.entityData.define(PIERCE_LEVEL, (byte) 0);
+	protected void defineSynchedData(SynchedEntityData.Builder builder) {
+		builder.define(CRITICAL, (byte) 0);
+		builder.define(PIERCE_LEVEL, (byte) 0);
 	}
 
 	@Override
@@ -331,7 +331,7 @@ public abstract class AbstractSpikeEntity extends Projectile {
 		boolean flag = entity.getType() == EntityType.ENDERMAN;
 		int k = entity.getRemainingFireTicks();
 		if (this.isOnFire() && !flag) {
-			entity.setSecondsOnFire(5);
+			entity.setRemainingFireTicks(20 * 5);
 		}
 
 		if (entity.hurt(damagesource, (float) i)) {
@@ -514,7 +514,7 @@ public abstract class AbstractSpikeEntity extends Projectile {
 	}
 
 	@Override
-	protected float getEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
+	public float getEyeHeightAccess(Pose pose) {
 		return 0.13F;
 	}
 
@@ -560,8 +560,8 @@ public abstract class AbstractSpikeEntity extends Projectile {
 	}
 
 	public void setEnchantmentEffectsFromEntity(LivingEntity p_190547_1_, float p_190547_2_) {
-		int i = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER_ARROWS, p_190547_1_);
-		int j = EnchantmentHelper.getEnchantmentLevel(Enchantments.PUNCH_ARROWS, p_190547_1_);
+		int i = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, p_190547_1_);
+		int j = EnchantmentHelper.getEnchantmentLevel(Enchantments.PUNCH, p_190547_1_);
 		this.setDamage((double) (p_190547_2_ * 2.0F) + this.random.nextGaussian() * 0.25D + (double) ((float) this.level().getDifficulty().getId() * 0.11F));
 		if (i > 0) {
 			this.setDamage(this.getDamage() + (double) i * 0.5D + 0.5D);
@@ -571,8 +571,8 @@ public abstract class AbstractSpikeEntity extends Projectile {
 			this.setKnockbackStrength(j);
 		}
 
-		if (EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAMING_ARROWS, p_190547_1_) > 0) {
-			this.setSecondsOnFire(100);
+		if (EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAME, p_190547_1_) > 0) {
+			this.setRemainingFireTicks(20 * 100);
 		}
 
 	}

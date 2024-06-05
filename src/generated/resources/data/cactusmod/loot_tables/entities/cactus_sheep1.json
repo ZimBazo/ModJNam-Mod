@@ -35,7 +35,7 @@
       "entries": [
         {
           "type": "minecraft:loot_table",
-          "name": "cactusmod:entities/cactus_sheep"
+          "value": "cactusmod:entities/cactus_sheep"
         }
       ],
       "rolls": 1.0

@@ -13,8 +13,8 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class CactusShovelItem extends ShovelItem {
 
-	public CactusShovelItem(Tier tier, float attackDamageIn, float attackSpeedIn, Item.Properties builder) {
-		super(tier, attackDamageIn, attackSpeedIn, builder);
+	public CactusShovelItem(Tier tier, float attackDamage, float attackSpeed, Item.Properties builder) {
+		super(tier, builder.attributes(ShovelItem.createAttributes(tier, attackDamage, attackSpeed)));
 	}
 
 	@Override

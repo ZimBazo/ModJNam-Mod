@@ -6,6 +6,7 @@ import com.mrbysco.cactusmod.init.CactusRegistry;
 import it.unimi.dsi.fastutil.floats.Float2FloatFunction;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.stats.Stat;
@@ -74,7 +75,7 @@ public class CactusChestBlock extends AbstractChestBlock<CactusChestBlockEntity>
 
 	public CactusChestBlock(BlockBehaviour.Properties builder) {
 		super(builder, CactusRegistry.CACTUS_CHEST_BLOCK_ENTITY::get);
-		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, Boolean.valueOf(false)));
+		this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(WATERLOGGED, Boolean.FALSE));
 	}
 
 	@Override
@@ -99,11 +100,11 @@ public class CactusChestBlock extends AbstractChestBlock<CactusChestBlockEntity>
 		FluidState fluidstate = context.getLevel().getFluidState(context.getClickedPos());
 		return this.defaultBlockState()
 				.setValue(FACING, context.getHorizontalDirection().getOpposite())
-				.setValue(WATERLOGGED, Boolean.valueOf(fluidstate.getType() == Fluids.WATER));
+				.setValue(WATERLOGGED, fluidstate.getType() == Fluids.WATER);
 	}
 
 	@Override
-	public InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand handIn, BlockHitResult hit) {
+	protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
 		if (level.isClientSide) {
 			return InteractionResult.SUCCESS;
 		} else {
@@ -158,7 +159,7 @@ public class CactusChestBlock extends AbstractChestBlock<CactusChestBlockEntity>
 	}
 
 	@Override
-	public boolean isPathfindable(BlockState state, BlockGetter level, BlockPos pos, PathComputationType type) {
+	protected boolean isPathfindable(BlockState pState, PathComputationType pPathComputationType) {
 		return false;
 	}
 
@@ -186,23 +187,11 @@ public class CactusChestBlock extends AbstractChestBlock<CactusChestBlockEntity>
 		return Stats.CUSTOM.get(Stats.OPEN_CHEST);
 	}
 
-	@Override
-	public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-		if (stack.hasCustomHoverName()) {
-			BlockEntity blockEntity = level.getBlockEntity(pos);
-			if (blockEntity instanceof CactusChestBlockEntity cactusChestBlockEntity) {
-				cactusChestBlockEntity.setCustomName(stack.getHoverName());
-			}
-		}
-	}
-
 	@OnlyIn(Dist.CLIENT)
 	public static DoubleBlockCombiner.Combiner<CactusChestBlockEntity, Float2FloatFunction> opennessCombiner(final LidBlockEntity lid) {
-		return new DoubleBlockCombiner.Combiner<CactusChestBlockEntity, Float2FloatFunction>() {
+		return new DoubleBlockCombiner.Combiner<>() {
 			public Float2FloatFunction acceptDouble(CactusChestBlockEntity blockEntity, CactusChestBlockEntity blockEntity1) {
-				return (angle) -> {
-					return Math.max(blockEntity.getOpenNess(angle), blockEntity1.getOpenNess(angle));
-				};
+				return (angle) -> Math.max(blockEntity.getOpenNess(angle), blockEntity1.getOpenNess(angle));
 			}
 
 			public Float2FloatFunction acceptSingle(CactusChestBlockEntity blockEntity) {
