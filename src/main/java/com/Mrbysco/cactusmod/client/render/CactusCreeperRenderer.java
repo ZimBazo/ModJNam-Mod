@@ -15,7 +15,7 @@ public class CactusCreeperRenderer extends MobRenderer<CactusCreeperEntity, Cree
 	private static final ResourceLocation texture = new ResourceLocation(Reference.MOD_ID, "textures/entity/cactus_creeper.png");
 
 	public CactusCreeperRenderer(EntityRendererProvider.Context context) {
-		super(context, new CreeperModel(context.bakeLayer(ModelLayers.CREEPER)), 0.7F);
+		super(context, new CreeperModel<>(context.bakeLayer(ModelLayers.CREEPER)), 0.7F);
 		this.addLayer(new LayerCactusCreeperCharge(this, context.getModelSet()));
 
 	}

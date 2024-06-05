@@ -13,9 +13,9 @@ public class CactusSkeletonRenderer extends HumanoidMobRenderer<CactusSkeletonEn
 	private static final ResourceLocation texture = new ResourceLocation(Reference.MOD_ID, "textures/entity/cactus_skeleton.png");
 
 	public CactusSkeletonRenderer(EntityRendererProvider.Context context) {
-		super(context, new SkeletonModel(context.bakeLayer(ModelLayers.SKELETON)), 0.5F);
-		this.addLayer(new HumanoidArmorLayer<>(this, new SkeletonModel(context.bakeLayer(ModelLayers.SKELETON_INNER_ARMOR)),
-				new SkeletonModel(context.bakeLayer(ModelLayers.SKELETON_OUTER_ARMOR)), context.getModelManager()));
+		super(context, new SkeletonModel<>(context.bakeLayer(ModelLayers.SKELETON)), 0.5F);
+		this.addLayer(new HumanoidArmorLayer<>(this, new SkeletonModel<>(context.bakeLayer(ModelLayers.SKELETON_INNER_ARMOR)),
+				new SkeletonModel<>(context.bakeLayer(ModelLayers.SKELETON_OUTER_ARMOR)), context.getModelManager()));
 
 	}
 

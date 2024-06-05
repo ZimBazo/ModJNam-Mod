@@ -13,7 +13,7 @@ public class CactusSnowmanRenderer extends MobRenderer<CactusSnowGolemEntity, Sn
 	private static final ResourceLocation texture = new ResourceLocation(Reference.MOD_ID, "textures/entity/cactus_snowman.png");
 
 	public CactusSnowmanRenderer(EntityRendererProvider.Context context) {
-		super(context, new SnowGolemModel(context.bakeLayer(ModelLayers.SNOW_GOLEM)), 0.5F);
+		super(context, new SnowGolemModel<>(context.bakeLayer(ModelLayers.SNOW_GOLEM)), 0.5F);
 		this.addLayer(new LayerCactusSnowmanHead(this));
 	}
 

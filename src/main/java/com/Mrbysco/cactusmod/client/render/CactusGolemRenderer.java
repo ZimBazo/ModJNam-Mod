@@ -14,7 +14,7 @@ public class CactusGolemRenderer extends MobRenderer<CactusGolem, IronGolemModel
 	private static final ResourceLocation texture = new ResourceLocation(Reference.MOD_ID, "textures/entity/cactus_villager_golem.png");
 
 	public CactusGolemRenderer(EntityRendererProvider.Context context) {
-		super(context, new IronGolemModel(context.bakeLayer(ModelLayers.IRON_GOLEM)), 0.5F);
+		super(context, new IronGolemModel<>(context.bakeLayer(ModelLayers.IRON_GOLEM)), 0.5F);
 	}
 
 	@Override

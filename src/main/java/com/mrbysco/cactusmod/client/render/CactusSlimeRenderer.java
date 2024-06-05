@@ -16,8 +16,8 @@ public class CactusSlimeRenderer extends MobRenderer<CactusSlimeEntity, SlimeMod
 	private static final ResourceLocation texture = new ResourceLocation(Reference.MOD_ID, "textures/entity/cactus_slime.png");
 
 	public CactusSlimeRenderer(EntityRendererProvider.Context context) {
-		super(context, new SlimeModel(context.bakeLayer(ModelLayers.SLIME)), 0.25F);
-		this.addLayer(new SlimeOuterLayer(this, context.getModelSet()));
+		super(context, new SlimeModel<>(context.bakeLayer(ModelLayers.SLIME)), 0.25F);
+		this.addLayer(new SlimeOuterLayer<>(this, context.getModelSet()));
 	}
 
 	public void render(CactusSlimeEntity entityIn, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource bufferSource, int packedLightIn) {

@@ -13,7 +13,7 @@ public class CactusSheepRenderer extends MobRenderer<CactusSheepEntity, CactusSh
 	private static final ResourceLocation texture = new ResourceLocation(Reference.MOD_ID, "textures/entity/cactus_sheep.png");
 
 	public CactusSheepRenderer(EntityRendererProvider.Context context) {
-		super(context, new CactusSheepModel(context.bakeLayer(ClientHandler.CACTUS_SHEEP)), 0.7F);
+		super(context, new CactusSheepModel<>(context.bakeLayer(ClientHandler.CACTUS_SHEEP)), 0.7F);
 		this.addLayer(new LayerCactusSheep(this, context.getModelSet()));
 	}
 

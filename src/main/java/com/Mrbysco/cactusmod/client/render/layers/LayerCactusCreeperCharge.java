@@ -16,7 +16,7 @@ public class LayerCactusCreeperCharge extends EnergySwirlLayer<CactusCreeperEnti
 
 	public LayerCactusCreeperCharge(RenderLayerParent<CactusCreeperEntity, CreeperModel<CactusCreeperEntity>> layerParent, EntityModelSet modelSet) {
 		super(layerParent);
-		this.creeperModel = new CreeperModel(modelSet.bakeLayer(ModelLayers.CREEPER_ARMOR));
+		this.creeperModel = new CreeperModel<>(modelSet.bakeLayer(ModelLayers.CREEPER_ARMOR));
 	}
 
 	protected float xOffset(float p_225634_1_) {

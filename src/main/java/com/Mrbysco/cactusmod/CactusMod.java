@@ -70,7 +70,7 @@ public class CactusMod {
 				protected ItemStack execute(BlockSource source, ItemStack stack) {
 					Level level = source.level();
 					BlockPos blockpos = source.pos().relative(source.state().getValue(DispenserBlock.FACING));
-					CarvedCactusBlock carvedCactusBlock = (CarvedCactusBlock) CactusRegistry.CARVED_CACTUS.get();
+					CarvedCactusBlock carvedCactusBlock = CactusRegistry.CARVED_CACTUS.get();
 					if (level.isEmptyBlock(blockpos) && carvedCactusBlock.canSpawnGolem(level, blockpos)) {
 						if (!level.isClientSide) {
 							level.setBlock(blockpos, carvedCactusBlock.defaultBlockState(), 3);

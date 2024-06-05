@@ -1,7 +1,6 @@
 package com.mrbysco.cactusmod.blocks.plant;
 
 import com.mojang.serialization.MapCodec;
-import com.mrbysco.cactusmod.blocks.CarvedCactusBlock;
 import com.mrbysco.cactusmod.init.CactusRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -21,8 +20,6 @@ import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.neoforged.neoforge.common.Tags;
 
-import java.util.Random;
-
 public class CactusPlantBlock extends PipeBlock {
 	public static final MapCodec<CactusPlantBlock> CODEC = simpleCodec(CactusPlantBlock::new);
 
@@ -30,6 +27,7 @@ public class CactusPlantBlock extends PipeBlock {
 	protected MapCodec<? extends PipeBlock> codec() {
 		return CODEC;
 	}
+
 	public CactusPlantBlock(BlockBehaviour.Properties builder) {
 		super(0.3125F, builder);
 		this.registerDefaultState(this.stateDefinition.any().setValue(NORTH, Boolean.valueOf(false)).setValue(EAST, Boolean.valueOf(false)).setValue(SOUTH, Boolean.valueOf(false)).setValue(WEST, Boolean.valueOf(false)).setValue(UP, Boolean.valueOf(false)).setValue(DOWN, Boolean.valueOf(false)));

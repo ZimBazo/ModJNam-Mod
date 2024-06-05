@@ -14,7 +14,7 @@ public class CactusSpiderRenderer<T extends CactusSpiderEntity> extends MobRende
 	private static final ResourceLocation texture = new ResourceLocation(Reference.MOD_ID, "textures/entity/cactus_spider.png");
 
 	public CactusSpiderRenderer(EntityRendererProvider.Context context) {
-		super(context, new CactusSpiderModel(context.bakeLayer(ClientHandler.CACTUS_SPIDER)), 0.25F);
+		super(context, new CactusSpiderModel<>(context.bakeLayer(ClientHandler.CACTUS_SPIDER)), 0.25F);
 	}
 
 	@Override

@@ -19,7 +19,7 @@ public class CactusShovelItem extends ShovelItem {
 
 	@Override
 	public boolean mineBlock(ItemStack stack, Level level, BlockState state, BlockPos pos,
-							 LivingEntity entityLiving) {
+	                         LivingEntity entityLiving) {
 		if (level.random.nextInt(10) < 3)
 			entityLiving.hurt(entityLiving.damageSources().cactus(), 1F);
 		return super.mineBlock(stack, level, state, pos, entityLiving);

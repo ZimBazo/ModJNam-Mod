@@ -85,6 +85,7 @@ public abstract class AbstractSpikeEntity extends Projectile {
 	}
 
 	@OnlyIn(Dist.CLIENT)
+	@Override
 	public boolean shouldRenderAtSqrDistance(double distance) {
 		double d0 = this.getBoundingBox().getSize() * 10.0D;
 		if (Double.isNaN(d0)) {
@@ -95,11 +96,13 @@ public abstract class AbstractSpikeEntity extends Projectile {
 		return distance < d0 * d0;
 	}
 
+	@Override
 	protected void defineSynchedData() {
 		this.entityData.define(CRITICAL, (byte) 0);
 		this.entityData.define(PIERCE_LEVEL, (byte) 0);
 	}
 
+	@Override
 	public void shoot(double x, double y, double z, float velocity, float inaccuracy) {
 		super.shoot(x, y, z, velocity, inaccuracy);
 		this.ticksInGround = 0;
@@ -258,6 +261,7 @@ public abstract class AbstractSpikeEntity extends Projectile {
 		this.ticksInGround = 0;
 	}
 
+	@Override
 	public void move(MoverType typeIn, Vec3 pos) {
 		super.move(typeIn, pos);
 		if (typeIn != MoverType.SELF && this.shouldFall()) {
@@ -285,6 +289,7 @@ public abstract class AbstractSpikeEntity extends Projectile {
 
 	}
 
+	@Override
 	protected void onHitEntity(EntityHitResult hitResult) {
 		super.onHitEntity(hitResult);
 		Entity entity = hitResult.getEntity();
@@ -385,6 +390,7 @@ public abstract class AbstractSpikeEntity extends Projectile {
 
 	}
 
+	@Override
 	protected void onHitBlock(BlockHitResult hitResult) {
 		this.inBlockState = this.level().getBlockState(hitResult.getBlockPos());
 		super.onHitBlock(hitResult);
@@ -424,10 +430,12 @@ public abstract class AbstractSpikeEntity extends Projectile {
 		return ProjectileUtil.getEntityHitResult(this.level(), this, startVec, endVec, this.getBoundingBox().expandTowards(this.getDeltaMovement()).inflate(1.0D), this::canHitEntity);
 	}
 
+	@Override
 	protected boolean canHitEntity(Entity p_230298_1_) {
 		return super.canHitEntity(p_230298_1_) && (this.piercedEntities == null || !this.piercedEntities.contains(p_230298_1_.getId()));
 	}
 
+	@Override
 	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
 		compound.putShort("life", (short) this.ticksInGround);
@@ -447,6 +455,7 @@ public abstract class AbstractSpikeEntity extends Projectile {
 	/**
 	 * (abstract) Protected helper method to read subclass entity data from NBT.
 	 */
+	@Override
 	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
 		this.ticksInGround = compound.getShort("life");
@@ -471,10 +480,12 @@ public abstract class AbstractSpikeEntity extends Projectile {
 		this.setShotFromCrossbow(compound.getBoolean("ShotFromCrossbow"));
 	}
 
+	@Override
 	public void setOwner(@Nullable Entity entityIn) {
 		super.setOwner(entityIn);
 	}
 
+	@Override
 	protected Entity.MovementEmission getMovementEmission() {
 		return Entity.MovementEmission.NONE;
 	}
@@ -497,10 +508,12 @@ public abstract class AbstractSpikeEntity extends Projectile {
 	/**
 	 * Returns true if it's possible to attack this entity with an item.
 	 */
+	@Override
 	public boolean isAttackable() {
 		return false;
 	}
 
+	@Override
 	protected float getEyeHeight(Pose poseIn, EntityDimensions sizeIn) {
 		return 0.13F;
 	}
@@ -571,9 +584,9 @@ public abstract class AbstractSpikeEntity extends Projectile {
 	/**
 	 * Sets if this arrow can noClip
 	 */
-	public void setNoClip(boolean noClipIn) {
-		this.noPhysics = noClipIn;
-		this.setArrowFlag(2, noClipIn);
+	public void setNoPhysics(boolean pNoPhysics) {
+		this.noPhysics = pNoPhysics;
+		this.setArrowFlag(2, pNoPhysics);
 	}
 
 	/**
@@ -594,6 +607,7 @@ public abstract class AbstractSpikeEntity extends Projectile {
 		this.setArrowFlag(4, fromCrossbow);
 	}
 
+	@Override
 	public Packet<ClientGamePacketListener> getAddEntityPacket() {
 		Entity entity = this.getOwner();
 		return new ClientboundAddEntityPacket(this, entity == null ? 0 : entity.getId());
