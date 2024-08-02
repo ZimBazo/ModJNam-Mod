@@ -18,7 +18,7 @@ import net.minecraft.world.entity.vehicle.Boat.Type;
 import org.joml.Quaternionf;
 
 public class CactusBoatRenderer extends EntityRenderer<CactusBoatEntity> {
-	private static final ResourceLocation CACTIBOAT = new ResourceLocation(Reference.MOD_ID, "textures/entity/cactiboat.png");
+	private static final ResourceLocation CACTIBOAT = Reference.modLoc("textures/entity/cactiboat.png");
 	protected final BoatModel modelBoat;
 
 	public CactusBoatRenderer(EntityRendererProvider.Context context) {
@@ -55,11 +55,11 @@ public class CactusBoatRenderer extends EntityRenderer<CactusBoatEntity> {
 		poseStack.scale(-1.0F, -1.0F, 1.0F);
 		poseStack.mulPose(Axis.YP.rotationDegrees(90.0F));
 		this.modelBoat.setupAnim(entityIn, partialTicks, 0.0F, -0.1F, 0.0F, 0.0F);
-		VertexConsumer ivertexbuilder = bufferIn.getBuffer(this.modelBoat.renderType(this.getTextureLocation(entityIn)));
-		this.modelBoat.renderToBuffer(poseStack, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+		VertexConsumer vertexConsumer = bufferIn.getBuffer(this.modelBoat.renderType(this.getTextureLocation(entityIn)));
+		this.modelBoat.renderToBuffer(poseStack, vertexConsumer, packedLightIn, OverlayTexture.NO_OVERLAY, -1);
 		if (!entityIn.isUnderWater()) {
-			VertexConsumer ivertexbuilder1 = bufferIn.getBuffer(RenderType.waterMask());
-			this.modelBoat.waterPatch().render(poseStack, ivertexbuilder1, packedLightIn, OverlayTexture.NO_OVERLAY);
+			VertexConsumer vertexConsumer1 = bufferIn.getBuffer(RenderType.waterMask());
+			this.modelBoat.waterPatch().render(poseStack, vertexConsumer1, packedLightIn, OverlayTexture.NO_OVERLAY);
 		}
 
 		poseStack.popPose();

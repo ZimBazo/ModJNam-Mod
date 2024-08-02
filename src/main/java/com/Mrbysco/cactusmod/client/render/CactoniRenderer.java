@@ -9,7 +9,7 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 
 public class CactoniRenderer extends MobRenderer<CactoniEntity, CactoniModel<CactoniEntity>> {
-	private static final ResourceLocation texture = new ResourceLocation(Reference.MOD_ID, "textures/entity/cactoni.png");
+	private static final ResourceLocation texture = Reference.modLoc("textures/entity/cactoni.png");
 
 	public CactoniRenderer(EntityRendererProvider.Context context) {
 		super(context, new CactoniModel<>(context.bakeLayer(ClientHandler.CACTONI)), 0.5F);

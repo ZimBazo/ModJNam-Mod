@@ -1,0 +1,16 @@
+{
+  "result": {
+    "id": "cactusmod:cactus_slime_block"
+  },
+  "pattern": [
+	"SSS",
+	"SSS",
+	"SSS"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "S": {
+      "item": "cactusmod:cactus_slimeball"
+    }
+  }
+}

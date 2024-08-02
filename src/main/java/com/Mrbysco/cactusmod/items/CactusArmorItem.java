@@ -24,7 +24,7 @@ public class CactusArmorItem extends ArmorItem {
 
 	@Override
 	public void onCraftedBy(ItemStack stack, Level level, Player playerIn) {
-		stack.enchant(Enchantments.THORNS, 2);
+		stack.enchant(level.holderOrThrow(Enchantments.THORNS), 2);
 		super.onCraftedBy(stack, level, playerIn);
 	}
 
@@ -32,7 +32,7 @@ public class CactusArmorItem extends ArmorItem {
 	public InteractionResultHolder<ItemStack> use(Level level, Player playerIn, InteractionHand handIn) {
 		ItemStack stack = playerIn.getItemInHand(handIn);
 		if (!stack.isEnchanted()) {
-			stack.enchant(Enchantments.THORNS, 2);
+			stack.enchant(level.holderOrThrow(Enchantments.THORNS), 2);
 		}
 		return super.use(level, playerIn, handIn);
 	}

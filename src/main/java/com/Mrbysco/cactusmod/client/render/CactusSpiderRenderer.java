@@ -11,7 +11,7 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 
 public class CactusSpiderRenderer<T extends CactusSpiderEntity> extends MobRenderer<T, CactusSpiderModel<T>> {
-	private static final ResourceLocation texture = new ResourceLocation(Reference.MOD_ID, "textures/entity/cactus_spider.png");
+	private static final ResourceLocation texture = Reference.modLoc("textures/entity/cactus_spider.png");
 
 	public CactusSpiderRenderer(EntityRendererProvider.Context context) {
 		super(context, new CactusSpiderModel<>(context.bakeLayer(ClientHandler.CACTUS_SPIDER)), 0.25F);

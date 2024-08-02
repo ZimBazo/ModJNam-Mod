@@ -1,5 +1,6 @@
 package com.mrbysco.cactusmod.feature;
 
+import com.mrbysco.cactusmod.Reference;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
@@ -16,7 +17,11 @@ import net.minecraft.world.level.levelgen.placement.RarityFilter;
 import java.util.List;
 
 public class CactusPlacedFeatures {
-	public static final ResourceKey<PlacedFeature> CACTUS_PLANT = PlacementUtils.createKey("cactusmod:cactus_plant");
+	public static final ResourceKey<PlacedFeature> CACTUS_PLANT = createKey("cactus_plant");
+
+	public static ResourceKey<PlacedFeature> createKey(String name) {
+		return ResourceKey.create(Registries.PLACED_FEATURE, Reference.modLoc(name));
+	}
 
 	public static void bootstrap(BootstrapContext<PlacedFeature> context) {
 		HolderGetter<ConfiguredFeature<?, ?>> holdergetter = context.lookup(Registries.CONFIGURED_FEATURE);

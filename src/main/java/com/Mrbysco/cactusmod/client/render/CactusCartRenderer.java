@@ -20,7 +20,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 
 public class CactusCartRenderer<T extends CactiCartEntity> extends EntityRenderer<T> {
-	private static final ResourceLocation CACTICART = new ResourceLocation(Reference.MOD_ID, "textures/entity/cacticart.png");
+	private static final ResourceLocation CACTICART = Reference.modLoc("textures/entity/cacticart.png");
 	protected final EntityModel<T> modelMinecart;
 
 	public CactusCartRenderer(EntityRendererProvider.Context context) {
@@ -97,8 +97,8 @@ public class CactusCartRenderer<T extends CactiCartEntity> extends EntityRendere
 
 		poseStack.scale(-1.0F, -1.0F, 1.0F);
 		this.modelMinecart.setupAnim(entityIn, 0.0F, 0.0F, -0.1F, 0.0F, 0.0F);
-		VertexConsumer ivertexbuilder = bufferSource.getBuffer(this.modelMinecart.renderType(this.getTextureLocation(entityIn)));
-		this.modelMinecart.renderToBuffer(poseStack, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+		VertexConsumer vertexConsumer = bufferSource.getBuffer(this.modelMinecart.renderType(this.getTextureLocation(entityIn)));
+		this.modelMinecart.renderToBuffer(poseStack, vertexConsumer, packedLightIn, OverlayTexture.NO_OVERLAY, -1);
 		poseStack.popPose();
 	}
 

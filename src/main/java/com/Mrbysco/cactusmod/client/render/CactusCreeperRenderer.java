@@ -12,7 +12,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 public class CactusCreeperRenderer extends MobRenderer<CactusCreeperEntity, CreeperModel<CactusCreeperEntity>> {
-	private static final ResourceLocation texture = new ResourceLocation(Reference.MOD_ID, "textures/entity/cactus_creeper.png");
+	private static final ResourceLocation texture = Reference.modLoc("textures/entity/cactus_creeper.png");
 
 	public CactusCreeperRenderer(EntityRendererProvider.Context context) {
 		super(context, new CreeperModel<>(context.bakeLayer(ModelLayers.CREEPER)), 0.7F);

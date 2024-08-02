@@ -99,5 +99,12 @@
     "container.cactus.hopper": "Cactus Hopper",
 
     "death.attack.cactusmod.spike": "%s got spiked",
-    "death.attack.cactusmod.spike.player": "%1$s was spiked by %2$s"
+    "death.attack.cactusmod.spike.player": "%1$s was spiked by %2$s",
+
+    "_comment": "Config",
+    "cactusmod.configuration.title": "Cactus Mod config",
+    "cactusmod.configuration.compat": "Compat",
+    "cactusmod.configuration.compat.tooltip": "Compat Settings",
+    "cactusmod.configuration.statuesCompat": "Statues Compat",
+    "cactusmod.configuration.statuesCompat.tooltip": "decides if right-clicking the Cactus Snow Man with a Statues sombrero will create a Cactoni [Default: true]"
 }

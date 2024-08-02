@@ -18,22 +18,19 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerEntity;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MoverType;
-import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
@@ -351,10 +348,7 @@ public abstract class AbstractSpikeEntity extends Projectile {
 					}
 				}
 
-				if (!this.level().isClientSide && entity1 instanceof LivingEntity) {
-					EnchantmentHelper.doPostHurtEffects(livingentity, entity1);
-					EnchantmentHelper.doPostDamageEffects((LivingEntity) entity1, livingentity);
-				}
+				this.doPostHurtEffects(livingentity);
 
 				this.doPostHurtEffects(livingentity);
 				if (livingentity != entity1 && livingentity instanceof Player && entity1 instanceof ServerPlayer && !this.isSilent()) {
@@ -473,7 +467,7 @@ public abstract class AbstractSpikeEntity extends Projectile {
 		this.setIsCritical(compound.getBoolean("crit"));
 		this.setPierceLevel(compound.getByte("PierceLevel"));
 		if (compound.contains("SoundEvent", 8)) {
-			SoundEvent soundevent = BuiltInRegistries.SOUND_EVENT.get(new ResourceLocation(compound.getString("SoundEvent")));
+			SoundEvent soundevent = BuiltInRegistries.SOUND_EVENT.get(ResourceLocation.tryParse(compound.getString("SoundEvent")));
 			this.hitSound = soundevent != null ? soundevent : this.getDefaultHitGroundSoundEvent();
 		}
 
@@ -511,11 +505,6 @@ public abstract class AbstractSpikeEntity extends Projectile {
 	@Override
 	public boolean isAttackable() {
 		return false;
-	}
-
-	@Override
-	public float getEyeHeightAccess(Pose pose) {
-		return 0.13F;
 	}
 
 	/**
@@ -559,24 +548,6 @@ public abstract class AbstractSpikeEntity extends Projectile {
 		return this.entityData.get(PIERCE_LEVEL);
 	}
 
-	public void setEnchantmentEffectsFromEntity(LivingEntity p_190547_1_, float p_190547_2_) {
-		int i = EnchantmentHelper.getEnchantmentLevel(Enchantments.POWER, p_190547_1_);
-		int j = EnchantmentHelper.getEnchantmentLevel(Enchantments.PUNCH, p_190547_1_);
-		this.setDamage((double) (p_190547_2_ * 2.0F) + this.random.nextGaussian() * 0.25D + (double) ((float) this.level().getDifficulty().getId() * 0.11F));
-		if (i > 0) {
-			this.setDamage(this.getDamage() + (double) i * 0.5D + 0.5D);
-		}
-
-		if (j > 0) {
-			this.setKnockbackStrength(j);
-		}
-
-		if (EnchantmentHelper.getEnchantmentLevel(Enchantments.FLAME, p_190547_1_) > 0) {
-			this.setRemainingFireTicks(20 * 100);
-		}
-
-	}
-
 	protected float getWaterDrag() {
 		return 0.6F;
 	}
@@ -608,8 +579,8 @@ public abstract class AbstractSpikeEntity extends Projectile {
 	}
 
 	@Override
-	public Packet<ClientGamePacketListener> getAddEntityPacket() {
+	public Packet<ClientGamePacketListener> getAddEntityPacket(ServerEntity serverEntity) {
 		Entity entity = this.getOwner();
-		return new ClientboundAddEntityPacket(this, entity == null ? 0 : entity.getId());
+		return new ClientboundAddEntityPacket(this, serverEntity, entity == null ? 0 : entity.getId());
 	}
 }

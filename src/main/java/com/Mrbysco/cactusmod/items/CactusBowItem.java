@@ -47,7 +47,7 @@ public class CactusBowItem extends BowItem {
 	@Override
 	public void releaseUsing(ItemStack stack, Level level, LivingEntity livingEntity, int timeLeft) {
 		if (livingEntity instanceof Player player) {
-			int i = this.getUseDuration(stack) - timeLeft;
+			int i = this.getUseDuration(stack, livingEntity) - timeLeft;
 			if (i < 0) return;
 
 			float f = getSpikeVelocity(i);
@@ -79,7 +79,7 @@ public class CactusBowItem extends BowItem {
 	}
 
 	@Override
-	public int getUseDuration(ItemStack stack) {
+	public int getUseDuration(ItemStack stack, LivingEntity livingEntity) {
 		return 72000;
 	}
 

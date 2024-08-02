@@ -9,17 +9,17 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.event.entity.living.LivingHurtEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 
 import java.util.ArrayList;
 
 public class CactusMobHandler {
 	@SubscribeEvent
-	public void CactusHurtEvent(LivingHurtEvent event) {
+	public void CactusHurtEvent(LivingDamageEvent.Pre event) {
 		Entity entity = event.getEntity();
 		DamageSource cactus = entity.damageSources().cactus();
 		if (entity instanceof ICactusMob mob && event.getSource() == cactus) {
-			event.setCanceled(true);
+			event.setNewDamage(0);
 		}
 
 		if (entity instanceof Player player) {
@@ -40,8 +40,8 @@ public class CactusMobHandler {
 
 					int i = level.random.nextInt(4);
 					ItemStack stack = armorList.get(i);
-					stack.hurtAndBreak(level.random.nextInt(2), player, Player.getEquipmentSlotForItem(stack));
-					event.setCanceled(true);
+					stack.hurtAndBreak(level.random.nextInt(2), player, player.getEquipmentSlotForItem(stack));
+					event.setNewDamage(0);
 				}
 			}
 		}

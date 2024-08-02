@@ -13,7 +13,7 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.resources.ResourceLocation;
 
 public class LayerCactusSheep extends RenderLayer<CactusSheepEntity, CactusSheepModel<CactusSheepEntity>> {
-	private static final ResourceLocation TEXTURE = new ResourceLocation(Reference.MOD_ID, "textures/entity/cactus_sheep_fur.png");
+	private static final ResourceLocation TEXTURE = Reference.modLoc("textures/entity/cactus_sheep_fur.png");
 	private final CactusWoolModel<CactusSheepEntity> woolModel;
 
 	public LayerCactusSheep(RenderLayerParent<CactusSheepEntity, CactusSheepModel<CactusSheepEntity>> rendererIn, EntityModelSet modelSet) {
@@ -23,7 +23,7 @@ public class LayerCactusSheep extends RenderLayer<CactusSheepEntity, CactusSheep
 
 	public void render(PoseStack poseStack, MultiBufferSource bufferIn, int packedLightIn, CactusSheepEntity entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
 		if (!entitylivingbaseIn.getSheared() && !entitylivingbaseIn.isInvisible()) {
-			coloredCutoutModelCopyLayerRender(this.getParentModel(), this.woolModel, TEXTURE, poseStack, bufferIn, packedLightIn, entitylivingbaseIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, partialTicks, 1.0F, 1.0F, 1.0F);
+			coloredCutoutModelCopyLayerRender(this.getParentModel(), this.woolModel, TEXTURE, poseStack, bufferIn, packedLightIn, entitylivingbaseIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, partialTicks, -1);
 		}
 	}
 }

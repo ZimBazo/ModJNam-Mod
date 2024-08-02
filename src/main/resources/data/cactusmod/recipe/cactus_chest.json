@@ -1,0 +1,19 @@
+{
+  "result": {
+    "id": "cactusmod:cactus_chest"
+  },
+  "pattern": [
+	" C ",
+    "CWC",
+    " C "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "C": {
+      "item": "minecraft:cactus"
+    },
+	"W": {
+      "item": "minecraft:chest"
+    }
+  }
+}

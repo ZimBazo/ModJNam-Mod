@@ -11,7 +11,7 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
 
 public class CactusGolemRenderer extends MobRenderer<CactusGolem, IronGolemModel<CactusGolem>> {
-	private static final ResourceLocation texture = new ResourceLocation(Reference.MOD_ID, "textures/entity/cactus_villager_golem.png");
+	private static final ResourceLocation texture = Reference.modLoc("textures/entity/cactus_villager_golem.png");
 
 	public CactusGolemRenderer(EntityRendererProvider.Context context) {
 		super(context, new IronGolemModel<>(context.bakeLayer(ModelLayers.IRON_GOLEM)), 0.5F);

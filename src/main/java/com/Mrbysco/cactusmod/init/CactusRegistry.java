@@ -39,7 +39,6 @@ import com.mrbysco.cactusmod.items.CactusBowItem;
 import com.mrbysco.cactusmod.items.CactusCartItem;
 import com.mrbysco.cactusmod.items.CactusFruitItem;
 import com.mrbysco.cactusmod.items.CactusJuiceItem;
-import com.mrbysco.cactusmod.items.block.CactusChestBlockItem;
 import com.mrbysco.cactusmod.items.tools.CactusAxeItem;
 import com.mrbysco.cactusmod.items.tools.CactusHoeItem;
 import com.mrbysco.cactusmod.items.tools.CactusPickaxeItem;
@@ -47,7 +46,6 @@ import com.mrbysco.cactusmod.items.tools.CactusShieldItem;
 import com.mrbysco.cactusmod.items.tools.CactusShovelItem;
 import com.mrbysco.cactusmod.items.tools.CactusSwordItem;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -123,7 +121,7 @@ public class CactusRegistry {
 	public static final DeferredItem<BlockItem> CACTUS_CAKE_ITEM = ITEMS.registerSimpleBlockItem(CACTUS_CAKE);
 	public static final DeferredItem<BlockItem> CACTUS_DISPENSER_ITEM = ITEMS.registerSimpleBlockItem(CACTUS_DISPENSER);
 	public static final DeferredItem<BlockItem> CACTUS_CRAFTING_TABLE_ITEM = ITEMS.registerSimpleBlockItem(CACTUS_CRAFTING_TABLE);
-	public static final DeferredItem<CactusChestBlockItem> CACTUS_CHEST_ITEM = ITEMS.register("cactus_chest", () -> new CactusChestBlockItem(CACTUS_CHEST.get(), new Item.Properties()));
+	public static final DeferredItem<BlockItem> CACTUS_CHEST_ITEM = ITEMS.registerSimpleBlockItem(CACTUS_CHEST);
 	public static final DeferredItem<BlockItem> CACTUS_HOPPER_ITEM = ITEMS.registerSimpleBlockItem(CACTUS_HOPPER);
 	public static final DeferredItem<BlockItem> CACTUS_TNT_ITEM = ITEMS.registerSimpleBlockItem(CACTUS_TNT);
 	public static final DeferredItem<BlockItem> CACTUS_DOOR_ITEM = ITEMS.registerSimpleBlockItem(CACTUS_DOOR);
@@ -165,7 +163,7 @@ public class CactusRegistry {
 	public static final DeferredItem<DeferredSpawnEggItem> CACTUS_SPIDER_SPAWN_EGG = ITEMS.register("cactus_spider_spawn_egg", () -> new DeferredSpawnEggItem(CactusRegistry.CACTUS_SPIDER, 0xFF649832, 0xFF39581a, new Item.Properties()));
 	public static final DeferredItem<DeferredSpawnEggItem> CACTUS_SKELETON_GOLEM_SPAWN_EGG = ITEMS.register("cactus_skeleton_spawn_egg", () -> new DeferredSpawnEggItem(CactusRegistry.CACTUS_SKELETON, 0xFF649832, 0xFF39581a, new Item.Properties()));
 
-	public static final DeferredHolder<SoundEvent, SoundEvent> HAT_MUSIC = SOUND_EVENTS.register("hat.music", () -> SoundEvent.createVariableRangeEvent(new ResourceLocation(Reference.MOD_ID, "hat.music")));
+	public static final DeferredHolder<SoundEvent, SoundEvent> HAT_MUSIC = SOUND_EVENTS.register("hat.music", () -> SoundEvent.createVariableRangeEvent(Reference.modLoc("hat.music")));
 
 	public static final Supplier<EntityType<CactusGolem>> CACTUS_GOLEM = ENTITIES.register("cactus_golem", () -> register("cactus_golem", EntityType.Builder.<CactusGolem>of(CactusGolem::new, MobCategory.MISC).sized(1.4F, 2.7F).clientTrackingRange(10)));
 	public static final Supplier<EntityType<CactusCowEntity>> CACTUS_COW = ENTITIES.register("cactus_cow", () -> register("cactus_cow", EntityType.Builder.<CactusCowEntity>of(CactusCowEntity::new, MobCategory.CREATURE).sized(0.9F, 1.4F).clientTrackingRange(10)));
@@ -173,18 +171,18 @@ public class CactusRegistry {
 			.sized(0.98F, 0.7F).clientTrackingRange(8)));
 	public static final Supplier<EntityType<CactusTNTEntity>> CACTUS_TNT_ENTITY = ENTITIES.register("cactus_tnt", () -> register("cactus_tnt", EntityType.Builder.<CactusTNTEntity>of(CactusTNTEntity::new, MobCategory.MISC)
 			.sized(0.98F, 0.7F).clientTrackingRange(8)));
-	public static final Supplier<EntityType<SpikeEntity>> CACTUS_SPIKE = ENTITIES.register("cactus_spike", () -> register("cactus_spike", EntityType.Builder.<SpikeEntity>of(SpikeEntity::new, MobCategory.MISC)
+	public static final Supplier<EntityType<SpikeEntity>> CACTUS_SPIKE = ENTITIES.register("cactus_spike", () -> register("cactus_spike", EntityType.Builder.<SpikeEntity>of(SpikeEntity::new, MobCategory.MISC).eyeHeight(0.13F)
 			.sized(0.5F, 0.5F).clientTrackingRange(4).updateInterval(20)));
 	public static final Supplier<EntityType<CactusCreeperEntity>> CACTUS_CREEPER = ENTITIES.register("cactus_creeper", () -> register("cactus_creeper", EntityType.Builder.<CactusCreeperEntity>of(CactusCreeperEntity::new, MobCategory.MONSTER).sized(0.6F, 1.7F).clientTrackingRange(8)));
-	public static final Supplier<EntityType<CactusSnowGolemEntity>> CACTUS_SNOW_GOLEM = ENTITIES.register("cactus_snow_golem", () -> register("cactus_snow_golem", EntityType.Builder.<CactusSnowGolemEntity>of(CactusSnowGolemEntity::new, MobCategory.MISC).sized(0.7F, 1.9F).clientTrackingRange(8)));
-	public static final Supplier<EntityType<CactusSlimeEntity>> CACTUS_SLIME = ENTITIES.register("cactus_slime", () -> register("cactus_slime", EntityType.Builder.<CactusSlimeEntity>of(CactusSlimeEntity::new, MobCategory.MONSTER).sized(2.04F, 2.04F).clientTrackingRange(10)));
-	public static final Supplier<EntityType<CactusSheepEntity>> CACTUS_SHEEP = ENTITIES.register("cactus_sheep", () -> register("cactus_sheep", EntityType.Builder.<CactusSheepEntity>of(CactusSheepEntity::new, MobCategory.CREATURE).sized(0.9F, 1.3F).clientTrackingRange(10)));
-	public static final Supplier<EntityType<CactusPigEntity>> CACTUS_PIG = ENTITIES.register("cactus_pig", () -> register("cactus_pig", EntityType.Builder.<CactusPigEntity>of(CactusPigEntity::new, MobCategory.CREATURE).sized(0.9F, 0.9F).clientTrackingRange(10)));
-	public static final Supplier<EntityType<CactusSpiderEntity>> CACTUS_SPIDER = ENTITIES.register("cactus_spider", () -> register("cactus_spider", EntityType.Builder.<CactusSpiderEntity>of(CactusSpiderEntity::new, MobCategory.MONSTER).sized(1.4F, 0.9F).clientTrackingRange(8)));
-	public static final Supplier<EntityType<CactusSkeletonEntity>> CACTUS_SKELETON = ENTITIES.register("cactus_skeleton", () -> register("cactus_skeleton", EntityType.Builder.<CactusSkeletonEntity>of(CactusSkeletonEntity::new, MobCategory.MONSTER).sized(0.6F, 1.99F).clientTrackingRange(8)));
+	public static final Supplier<EntityType<CactusSnowGolemEntity>> CACTUS_SNOW_GOLEM = ENTITIES.register("cactus_snow_golem", () -> register("cactus_snow_golem", EntityType.Builder.<CactusSnowGolemEntity>of(CactusSnowGolemEntity::new, MobCategory.MISC).sized(0.7F, 1.9F).eyeHeight(1.7F).clientTrackingRange(8)));
+	public static final Supplier<EntityType<CactusSlimeEntity>> CACTUS_SLIME = ENTITIES.register("cactus_slime", () -> register("cactus_slime", EntityType.Builder.<CactusSlimeEntity>of(CactusSlimeEntity::new, MobCategory.MONSTER).sized(0.52F, 0.52F).eyeHeight(0.325F).clientTrackingRange(10)));
+	public static final Supplier<EntityType<CactusSheepEntity>> CACTUS_SHEEP = ENTITIES.register("cactus_sheep", () -> register("cactus_sheep", EntityType.Builder.<CactusSheepEntity>of(CactusSheepEntity::new, MobCategory.CREATURE).sized(0.9F, 1.3F).eyeHeight(1.235F).clientTrackingRange(10)));
+	public static final Supplier<EntityType<CactusPigEntity>> CACTUS_PIG = ENTITIES.register("cactus_pig", () -> register("cactus_pig", EntityType.Builder.<CactusPigEntity>of(CactusPigEntity::new, MobCategory.CREATURE).sized(0.9F, 0.9F).passengerAttachments(0.86875F).clientTrackingRange(10)));
+	public static final Supplier<EntityType<CactusSpiderEntity>> CACTUS_SPIDER = ENTITIES.register("cactus_spider", () -> register("cactus_spider", EntityType.Builder.<CactusSpiderEntity>of(CactusSpiderEntity::new, MobCategory.MONSTER).sized(1.4F, 0.9F).eyeHeight(0.65F).passengerAttachments(0.765F).clientTrackingRange(8)));
+	public static final Supplier<EntityType<CactusSkeletonEntity>> CACTUS_SKELETON = ENTITIES.register("cactus_skeleton", () -> register("cactus_skeleton", EntityType.Builder.<CactusSkeletonEntity>of(CactusSkeletonEntity::new, MobCategory.MONSTER).sized(0.6F, 1.99F).eyeHeight(1.52F).passengerAttachments(1.31875F).clientTrackingRange(8)));
 	public static final Supplier<EntityType<CactusBoatEntity>> CACTUS_BOAT_ENTITY = ENTITIES.register("cactus_boat", () -> register("cactus_boat", EntityType.Builder.<CactusBoatEntity>of(CactusBoatEntity::new, MobCategory.MISC)
-			.sized(1.375F, 0.5625F).clientTrackingRange(10)));
-	public static final Supplier<EntityType<CactoniEntity>> CACTONI = ENTITIES.register("cactoni", () -> register("cactoni", EntityType.Builder.<CactoniEntity>of(CactoniEntity::new, MobCategory.MISC).sized(0.7F, 2.4F).clientTrackingRange(8)));
+			.sized(1.375F, 0.5625F).eyeHeight(0.5625F).clientTrackingRange(10)));
+	public static final Supplier<EntityType<CactoniEntity>> CACTONI = ENTITIES.register("cactoni", () -> register("cactoni", EntityType.Builder.<CactoniEntity>of(CactoniEntity::new, MobCategory.MISC).sized(0.7F, 2.4F).eyeHeight(1.7F).clientTrackingRange(8)));
 
 	public static <T extends Entity> EntityType<T> register(String id, EntityType.Builder<T> builder) {
 		return builder.build(id);

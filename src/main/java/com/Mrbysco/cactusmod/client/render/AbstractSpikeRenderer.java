@@ -10,7 +10,6 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.Mth;
-import org.joml.Matrix3f;
 import org.joml.Matrix4f;
 
 public abstract class AbstractSpikeRenderer<T extends AbstractSpikeEntity> extends EntityRenderer<T> {
@@ -57,7 +56,11 @@ public abstract class AbstractSpikeRenderer<T extends AbstractSpikeEntity> exten
 	}
 
 	public void drawVertex(Matrix4f pose, PoseStack.Pose poseLast, VertexConsumer vertexConsumer, int offsetX, int offsetY, int offsetZ, float textureX, float textureY, int p_229039_9_, int p_229039_10_, int p_229039_11_, int packedLightIn) {
-		vertexConsumer.vertex(pose, (float) offsetX, (float) offsetY, (float) offsetZ).color(255, 255, 255, 255).uv(textureX, textureY)
-				.overlayCoords(OverlayTexture.NO_OVERLAY).uv2(packedLightIn).normal(poseLast, (float) p_229039_9_, (float) p_229039_11_, (float) p_229039_10_).endVertex();
+		vertexConsumer.addVertex(pose, (float) offsetX, (float) offsetY, (float) offsetZ)
+				.setColor(255, 255, 255, 255)
+				.setUv(textureX, textureY)
+				.setOverlay(OverlayTexture.NO_OVERLAY)
+				.setLight(packedLightIn)
+				.setNormal(poseLast, (float) p_229039_9_, (float) p_229039_11_, (float) p_229039_10_);
 	}
 }

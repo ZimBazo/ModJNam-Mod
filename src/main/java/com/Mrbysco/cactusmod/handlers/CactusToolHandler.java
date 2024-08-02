@@ -13,13 +13,13 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.EventHooks;
-import net.neoforged.neoforge.event.entity.living.LivingAttackEvent;
-import net.neoforged.neoforge.event.entity.living.LivingHurtEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
+import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 
 public class CactusToolHandler {
 
 	@SubscribeEvent
-	public void CactusSwordEvent(LivingAttackEvent event) {
+	public void CactusSwordEvent(LivingIncomingDamageEvent event) {
 		DamageSource source = event.getSource();
 		if (source != null && source.getEntity() instanceof Player player) {
 			ItemStack stack = player.getMainHandItem();
@@ -33,18 +33,18 @@ public class CactusToolHandler {
 	}
 
 	@SubscribeEvent
-	public void CactusShieldEvent(LivingHurtEvent event) {
+	public void CactusShieldEvent(LivingDamageEvent.Post event) {
 		if (event.getEntity() instanceof Player player) {
 			ItemStack heldStack = player.getUseItem();
 			Level level = player.level();
 
 			if (!heldStack.isEmpty() && heldStack.getItem() == CactusRegistry.CACTUS_SHIELD.get()) {
 				if (canBlockDamageSource(event.getSource(), player)) {
-					damageShield(player, event.getAmount());
+					damageShield(player, event.getOriginalDamage());
 
 					if (level.random.nextInt(10) <= 5) {
 						Entity trueSource = event.getSource().getEntity();
-						trueSource.hurt(player.damageSources().generic(), 1F + Mth.floor(event.getAmount()));
+						trueSource.hurt(player.damageSources().generic(), 1F + Mth.floor(event.getOriginalDamage()));
 					}
 				}
 			}

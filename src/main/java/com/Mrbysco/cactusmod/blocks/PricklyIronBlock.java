@@ -10,8 +10,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
-import net.neoforged.neoforge.common.IPlantable;
-import net.neoforged.neoforge.common.PlantType;
+import net.neoforged.neoforge.common.util.TriState;
 
 public class PricklyIronBlock extends Block {
 	public static final VoxelShape ALMOST_FULL = Block.box(0.08, 0, 0.08, 15.98, 15.98, 15.98);
@@ -21,13 +20,13 @@ public class PricklyIronBlock extends Block {
 	}
 
 	@Override
-	public boolean canSustainPlant(BlockState state, BlockGetter getter, BlockPos pos, Direction facing, IPlantable plantable) {
-		if (facing == Direction.UP) {
-			PlantType plant = plantable.getPlantType(getter, pos.relative(facing));
-			return plant == PlantType.DESERT;
-		} else {
-			return false;
+	public TriState canSustainPlant(BlockState state, BlockGetter level, BlockPos soilPosition, Direction facing, BlockState plant) {
+		if (level instanceof Level actualLevel) {
+			if (plant.canSurvive(actualLevel, soilPosition)) {
+				return TriState.TRUE;
+			}
 		}
+		return super.canSustainPlant(state, level, soilPosition, facing, plant);
 	}
 
 	@Override

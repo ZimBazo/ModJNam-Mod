@@ -10,7 +10,7 @@ import net.minecraft.client.renderer.entity.layers.EnergySwirlLayer;
 import net.minecraft.resources.ResourceLocation;
 
 public class LayerCactusCreeperCharge extends EnergySwirlLayer<CactusCreeperEntity, CreeperModel<CactusCreeperEntity>> {
-	private static final ResourceLocation LIGHTNING_TEXTURE = new ResourceLocation("textures/entity/creeper/creeper_armor.png");
+	private static final ResourceLocation LIGHTNING_TEXTURE = ResourceLocation.withDefaultNamespace("textures/entity/creeper/creeper_armor.png");
 	private final CreeperModel<CactusCreeperEntity> creeperModel;
 
 

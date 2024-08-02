@@ -33,7 +33,7 @@ public class CactusArmor {
 			float pKnockbackResistance,
 			Supplier<Ingredient> pRepairIngredient
 	) {
-		List<ArmorMaterial.Layer> list = List.of(new ArmorMaterial.Layer(new ResourceLocation(pName)));
+		List<ArmorMaterial.Layer> list = List.of(new ArmorMaterial.Layer(ResourceLocation.tryParse(pName)));
 		return register(pName, pDefense, pEnchantmentValue, pEquipSound, pToughness, pKnockbackResistance, pRepairIngredient, list);
 	}
 
@@ -55,7 +55,7 @@ public class CactusArmor {
 
 		return Registry.registerForHolder(
 				BuiltInRegistries.ARMOR_MATERIAL,
-				new ResourceLocation(pName),
+				ResourceLocation.tryParse(pName),
 				new ArmorMaterial(enummap, pEnchantmentValue, pEquipSound, pRepairIngridient, pLayers, pToughness, pKnockbackResistance)
 		);
 	}

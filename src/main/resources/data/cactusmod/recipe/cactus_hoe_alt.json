@@ -1,0 +1,19 @@
+{
+  "result": {
+    "id": "cactusmod:cactus_hoe"
+  },
+  "pattern": [
+	"CC ",
+    " S ",
+    " S "
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "S": {
+      "item": "cactusmod:cactus_stick"
+    },
+	"C": {
+      "item": "minecraft:cactus"
+    }
+  }
+}

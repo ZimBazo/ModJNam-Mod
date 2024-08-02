@@ -13,7 +13,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
 public class CactusSlimeRenderer extends MobRenderer<CactusSlimeEntity, SlimeModel<CactusSlimeEntity>> {
-	private static final ResourceLocation texture = new ResourceLocation(Reference.MOD_ID, "textures/entity/cactus_slime.png");
+	private static final ResourceLocation texture = Reference.modLoc("textures/entity/cactus_slime.png");
 
 	public CactusSlimeRenderer(EntityRendererProvider.Context context) {
 		super(context, new SlimeModel<>(context.bakeLayer(ModelLayers.SLIME)), 0.25F);

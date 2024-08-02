@@ -28,7 +28,7 @@ public class CactusModCompatHandlers {
 			ItemStack stack = event.getItemStack();
 
 			if (!level.isClientSide) {
-				Item sombrero = BuiltInRegistries.ITEM.get(new ResourceLocation("statues", "sombrero"));
+				Item sombrero = BuiltInRegistries.ITEM.get(ResourceLocation.fromNamespaceAndPath("statues", "sombrero"));
 				if (sombrero != null && stack.getItem() == sombrero && target instanceof CactusSnowGolemEntity) {
 					CactoniEntity cactoni = CactusRegistry.CACTONI.get().create(level);
 					if (cactoni != null) {

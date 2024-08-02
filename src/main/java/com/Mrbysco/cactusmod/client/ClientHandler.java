@@ -17,15 +17,16 @@ import com.mrbysco.cactusmod.client.render.CactusSpiderRenderer;
 import com.mrbysco.cactusmod.client.render.CactusTNTRenderer;
 import com.mrbysco.cactusmod.client.render.SpikeRenderer;
 import com.mrbysco.cactusmod.client.render.block.CactusChestBER;
+import com.mrbysco.cactusmod.client.render.block.CactusChestBEWLR;
 import com.mrbysco.cactusmod.client.render.models.CactoniModel;
 import com.mrbysco.cactusmod.client.render.models.CactusSheepModel;
 import com.mrbysco.cactusmod.client.render.models.CactusSpiderModel;
 import com.mrbysco.cactusmod.client.render.models.CactusWoolModel;
 import com.mrbysco.cactusmod.init.CactusRegistry;
-import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.gui.screens.MenuScreens.ScreenConstructor;
 import net.minecraft.client.gui.screens.inventory.CraftingScreen;
 import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.client.renderer.ItemBlockRenderTypes;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.item.ItemProperties;
@@ -36,12 +37,14 @@ import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
+import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 
 public class ClientHandler {
-	public static final ModelLayerLocation CACTONI = new ModelLayerLocation(new ResourceLocation(Reference.MOD_ID, "cactoni"), "cactoni");
-	public static final ModelLayerLocation CACTUS_SPIDER = new ModelLayerLocation(new ResourceLocation(Reference.MOD_ID, "cactus_spider"), "cactus_spider");
-	public static final ModelLayerLocation CACTUS_SHEEP = new ModelLayerLocation(new ResourceLocation(Reference.MOD_ID, "cactus_sheep"), "cactus_sheep");
-	public static final ModelLayerLocation CACTUS_SHEEP_WOOL = new ModelLayerLocation(new ResourceLocation(Reference.MOD_ID, "cactus_sheep_wool"), "cactus_sheep_wool");
+	public static final ModelLayerLocation CACTONI = new ModelLayerLocation(Reference.modLoc("cactoni"), "cactoni");
+	public static final ModelLayerLocation CACTUS_SPIDER = new ModelLayerLocation(Reference.modLoc("cactus_spider"), "cactus_spider");
+	public static final ModelLayerLocation CACTUS_SHEEP = new ModelLayerLocation(Reference.modLoc("cactus_sheep"), "cactus_sheep");
+	public static final ModelLayerLocation CACTUS_SHEEP_WOOL = new ModelLayerLocation(Reference.modLoc("cactus_sheep_wool"), "cactus_sheep_wool");
 
 	public static void registerRenders(FMLClientSetupEvent event) {
 		ItemBlockRenderTypes.setRenderLayer(CactusRegistry.CACTUS_SLIME_BLOCK.get(), RenderType.translucent());
@@ -50,16 +53,27 @@ public class ClientHandler {
 		ItemBlockRenderTypes.setRenderLayer(CactusRegistry.JACKO_CACTUS.get(), RenderType.cutout());
 
 		event.enqueueWork(() -> {
-			ItemProperties.register(CactusRegistry.CACTUS_BOW.get(), new ResourceLocation("pull"), (stack, level, entity, i) -> {
-				if (entity == null) {
+			ItemProperties.register(CactusRegistry.CACTUS_BOW.get(), ResourceLocation.withDefaultNamespace("pull"), (stack, level, livingEntity, i) -> {
+				if (livingEntity == null) {
 					return 0.0F;
 				} else {
-					return entity.getUseItem() != stack ? 0.0F : (float) (stack.getUseDuration() - entity.getUseItemRemainingTicks()) / 20.0F;
+					return livingEntity.getUseItem() != stack ? 0.0F : (float) (stack.getUseDuration(livingEntity) - livingEntity.getUseItemRemainingTicks()) / 20.0F;
 				}
 			});
-			ItemProperties.register(CactusRegistry.CACTUS_BOW.get(), new ResourceLocation("pulling"), (stack, level, entity, i) -> entity != null &&
+			ItemProperties.register(CactusRegistry.CACTUS_BOW.get(), ResourceLocation.withDefaultNamespace("pulling"), (stack, level, entity, i) -> entity != null &&
 					entity.isUsingItem() && entity.getUseItem() == stack ? 1.0F : 0.0F);
 		});
+	}
+
+	public static void registerClientExtensions(RegisterClientExtensionsEvent event) {
+		event.registerItem(new IClientItemExtensions() {
+			final BlockEntityWithoutLevelRenderer renderer = new CactusChestBEWLR();
+
+			@Override
+			public BlockEntityWithoutLevelRenderer getCustomRenderer() {
+				return renderer;
+			}
+		}, CactusRegistry.CACTUS_CHEST_ITEM.get());
 	}
 
 	public static void registerMenuScreens(RegisterMenuScreensEvent event) {
@@ -92,6 +106,7 @@ public class ClientHandler {
 		event.registerLayerDefinition(CACTUS_SHEEP_WOOL, CactusWoolModel::createFurLayer);
 	}
 
+	@SuppressWarnings("rawtypes")
 	private static class Factory implements ScreenConstructor {
 		@Override
 		public CraftingScreen create(AbstractContainerMenu container, Inventory pInv, Component name) {
@@ -99,5 +114,5 @@ public class ClientHandler {
 		}
 	}
 
-	public static final ResourceLocation CACTUS_CHEST_LOCATION = new ResourceLocation(Reference.MOD_ID, "entity/chest/cactus_chest");
+	public static final ResourceLocation CACTUS_CHEST_LOCATION = Reference.modLoc("entity/chest/cactus_chest");
 }

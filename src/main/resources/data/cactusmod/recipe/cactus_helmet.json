@@ -1,0 +1,15 @@
+{
+  "result": {
+    "id": "cactusmod:cactus_helmet"
+  },
+  "pattern": [
+	"CCC",
+    "C C"
+  ],
+  "type": "minecraft:crafting_shaped",
+  "key": {
+	"C": {
+      "item": "minecraft:cactus"
+    }
+  }
+}

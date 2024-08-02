@@ -38,7 +38,6 @@ import net.neoforged.neoforge.common.IShearable;
 import net.neoforged.neoforge.event.EventHooks;
 import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 
 public class CactusSnowGolemEntity extends AbstractGolem implements RangedAttackMob, IShearable, ICactusMob {
@@ -147,13 +146,12 @@ public class CactusSnowGolemEntity extends AbstractGolem implements RangedAttack
 	}
 
 	@Override
-	public boolean isShearable(@Nonnull ItemStack item, Level level, BlockPos pos) {
+	public boolean isShearable(@Nullable Player player, ItemStack item, Level level, BlockPos pos) {
 		return this.isShearable();
 	}
 
-	@Nonnull
 	@Override
-	public List<ItemStack> onSheared(@Nullable Player player, @Nonnull ItemStack item, Level level, BlockPos pos, int fortune) {
+	public List<ItemStack> onSheared(@Nullable Player player, ItemStack item, Level level, BlockPos pos) {
 		level.playSound(null, this, SoundEvents.SNOW_GOLEM_SHEAR, player == null ? SoundSource.BLOCKS : SoundSource.PLAYERS, 1.0F, 1.0F);
 		if (!level.isClientSide()) {
 			setCactusEquipped(false);
