@@ -22,6 +22,11 @@ public class CactusHopperBlockEntity extends HopperBlockEntity {
 	}
 
 	@Override
+	public boolean isValidBlockState(BlockState state) {
+		return this.getType().isValid(state);
+	}
+
+	@Override
 	protected Component getDefaultName() {
 		return Component.translatable("container.cactus.hopper");
 	}

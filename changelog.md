@@ -1,1 +1,1 @@
-* Initial port to 1.21
+* Fix crash when placing a Cactus Hopper
