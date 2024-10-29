@@ -16,7 +16,6 @@ import com.mrbysco.cactusmod.blocks.redstone.CactusChestBlock;
 import com.mrbysco.cactusmod.blocks.redstone.CactusDispenserBlock;
 import com.mrbysco.cactusmod.blocks.redstone.CactusDoorBlock;
 import com.mrbysco.cactusmod.blocks.redstone.CactusHopperBlock;
-import com.mrbysco.cactusmod.blocks.redstone.CactusTNTBlock;
 import com.mrbysco.cactusmod.entities.CactiCartEntity;
 import com.mrbysco.cactusmod.entities.CactoniEntity;
 import com.mrbysco.cactusmod.entities.CactusBoatEntity;
@@ -26,7 +25,6 @@ import com.mrbysco.cactusmod.entities.CactusPigEntity;
 import com.mrbysco.cactusmod.entities.CactusSheepEntity;
 import com.mrbysco.cactusmod.entities.CactusSlimeEntity;
 import com.mrbysco.cactusmod.entities.CactusSnowGolemEntity;
-import com.mrbysco.cactusmod.entities.CactusTNTEntity;
 import com.mrbysco.cactusmod.entities.SpikeEntity;
 import com.mrbysco.cactusmod.entities.hostile.CactusCreeperEntity;
 import com.mrbysco.cactusmod.entities.hostile.CactusSkeletonEntity;
@@ -98,7 +96,6 @@ public class CactusRegistry {
 	public static final RegistryObject<Block> CACTUS_CRAFTING_TABLE = BLOCKS.register("cactus_crafting_table", () -> new BlockCactusWorkbench(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).strength(0.4F).sound(SoundType.WOOL)));
 	public static final RegistryObject<Block> CACTUS_CHEST = BLOCKS.register("cactus_chest", () -> new CactusChestBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).strength(0.4F).sound(SoundType.WOOL)));
 	public static final RegistryObject<Block> CACTUS_HOPPER = BLOCKS.register("cactus_hopper", () -> new CactusHopperBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).strength(1.0F, 0.4F).sound(SoundType.WOOL)));
-	public static final RegistryObject<Block> CACTUS_TNT = BLOCKS.register("cactus_tnt", () -> new CactusTNTBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).instabreak().sound(SoundType.WOOL)));
 	public static final RegistryObject<CactusDoorBlock> CACTUS_DOOR = BLOCKS.register("cactus_door", () -> new CactusDoorBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).strength(0.4F).sound(SoundType.WOOL).noOcclusion()));
 	public static final RegistryObject<Block> CACTUS_SLIME_BLOCK = BLOCKS.register("cactus_slime_block", () -> new CactusSlimeBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).strength(0.25F).sound(SoundType.SLIME_BLOCK).noOcclusion()));
 	public static final RegistryObject<Block> CACTUS_PLANT = BLOCKS.register("cactus_plant", () -> new CactusPlantBlock(BlockBehaviour.Properties.of().mapColor(MapColor.PLANT).strength(0.4F).sound(SoundType.WOOL).noOcclusion()));
@@ -119,7 +116,6 @@ public class CactusRegistry {
 	public static final RegistryObject<Item> CACTUS_CRAFTING_TABLE_ITEM = ITEMS.register("cactus_crafting_table", () -> new BlockItem(CACTUS_CRAFTING_TABLE.get(), itemBuilder()));
 	public static final RegistryObject<Item> CACTUS_CHEST_ITEM = ITEMS.register("cactus_chest", () -> new CactusChestBlockItem(CACTUS_CHEST.get(), itemBuilder()));
 	public static final RegistryObject<Item> CACTUS_HOPPER_ITEM = ITEMS.register("cactus_hopper", () -> new BlockItem(CACTUS_HOPPER.get(), itemBuilder()));
-	public static final RegistryObject<Item> CACTUS_TNT_ITEM = ITEMS.register("cactus_tnt", () -> new BlockItem(CACTUS_TNT.get(), itemBuilder()));
 	public static final RegistryObject<Item> CACTUS_DOOR_ITEM = ITEMS.register("cactus_door", () -> new BlockItem(CACTUS_DOOR.get(), itemBuilder()));
 	public static final RegistryObject<Item> CACTUS_SLIME_BLOCK_ITEM = ITEMS.register("cactus_slime_block", () -> new BlockItem(CACTUS_SLIME_BLOCK.get(), itemBuilder()));
 	public static final RegistryObject<Item> CACTUS_FLOWER_ITEM = ITEMS.register("cactus_flower", () -> new BlockItem(CACTUS_FLOWER.get(), itemBuilder()));
@@ -169,8 +165,6 @@ public class CactusRegistry {
 	public static final RegistryObject<EntityType<CactusCowEntity>> CACTUS_COW = ENTITIES.register("cactus_cow", () -> register("cactus_cow", EntityType.Builder.<CactusCowEntity>of(CactusCowEntity::new, MobCategory.CREATURE).sized(0.9F, 1.4F).clientTrackingRange(10)));
 	public static final RegistryObject<EntityType<CactiCartEntity>> CACTUS_CART_ENTITY = ENTITIES.register("cactus_cart", () -> register("cactus_cart", EntityType.Builder.<CactiCartEntity>of(CactiCartEntity::new, MobCategory.MISC)
 			.sized(0.98F, 0.7F).clientTrackingRange(8).setCustomClientFactory(CactiCartEntity::new)));
-	public static final RegistryObject<EntityType<CactusTNTEntity>> CACTUS_TNT_ENTITY = ENTITIES.register("cactus_tnt", () -> register("cactus_tnt", EntityType.Builder.<CactusTNTEntity>of(CactusTNTEntity::new, MobCategory.MISC)
-			.sized(0.98F, 0.7F).clientTrackingRange(8).setCustomClientFactory(CactusTNTEntity::new)));
 	public static final RegistryObject<EntityType<SpikeEntity>> CACTUS_SPIKE = ENTITIES.register("cactus_spike", () -> register("cactus_spike", EntityType.Builder.<SpikeEntity>of(SpikeEntity::new, MobCategory.MISC)
 			.sized(0.5F, 0.5F).clientTrackingRange(4).updateInterval(20).setCustomClientFactory(SpikeEntity::new)));
 	public static final RegistryObject<EntityType<CactusCreeperEntity>> CACTUS_CREEPER = ENTITIES.register("cactus_creeper", () -> register("cactus_creeper", EntityType.Builder.<CactusCreeperEntity>of(CactusCreeperEntity::new, MobCategory.MONSTER).sized(0.6F, 1.7F).clientTrackingRange(8)));

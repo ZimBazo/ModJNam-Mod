@@ -14,7 +14,6 @@ import com.mrbysco.cactusmod.client.render.CactusSkeletonRenderer;
 import com.mrbysco.cactusmod.client.render.CactusSlimeRenderer;
 import com.mrbysco.cactusmod.client.render.CactusSnowmanRenderer;
 import com.mrbysco.cactusmod.client.render.CactusSpiderRenderer;
-import com.mrbysco.cactusmod.client.render.CactusTNTRenderer;
 import com.mrbysco.cactusmod.client.render.SpikeRenderer;
 import com.mrbysco.cactusmod.client.render.block.CactusChestBER;
 import com.mrbysco.cactusmod.client.render.models.CactoniModel;
@@ -44,7 +43,6 @@ public class ClientHandler {
 
 	public static void registerRenders(FMLClientSetupEvent event) {
 		ItemBlockRenderTypes.setRenderLayer(CactusRegistry.CACTUS_SLIME_BLOCK.get(), RenderType.translucent());
-		ItemBlockRenderTypes.setRenderLayer(CactusRegistry.CACTUS_TNT.get(), RenderType.cutout());
 		ItemBlockRenderTypes.setRenderLayer(CactusRegistry.CARVED_CACTUS.get(), RenderType.cutout());
 		ItemBlockRenderTypes.setRenderLayer(CactusRegistry.JACKO_CACTUS.get(), RenderType.cutout());
 
@@ -69,7 +67,6 @@ public class ClientHandler {
 		event.registerEntityRenderer(CactusRegistry.CACTUS_GOLEM.get(), CactusGolemRenderer::new);
 		event.registerEntityRenderer(CactusRegistry.CACTUS_COW.get(), CactusCowRenderer::new);
 		event.registerEntityRenderer(CactusRegistry.CACTUS_CART_ENTITY.get(), CactusCartRenderer::new);
-		event.registerEntityRenderer(CactusRegistry.CACTUS_TNT_ENTITY.get(), CactusTNTRenderer::new);
 		event.registerEntityRenderer(CactusRegistry.CACTUS_SPIKE.get(), SpikeRenderer::new);
 		event.registerEntityRenderer(CactusRegistry.CACTUS_CREEPER.get(), CactusCreeperRenderer::new);
 		event.registerEntityRenderer(CactusRegistry.CACTUS_SNOW_GOLEM.get(), CactusSnowmanRenderer::new);

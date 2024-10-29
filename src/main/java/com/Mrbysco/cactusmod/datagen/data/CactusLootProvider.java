@@ -15,7 +15,6 @@ import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.TntBlock;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -173,12 +172,6 @@ public class CactusLootProvider extends LootTableProvider {
 			});
 			this.add(CactusRegistry.CACTUS_PLANT.get(), createSingleItemTable(CactusRegistry.CACTUS_FRUIT.get(), UniformGenerator.between(0.0F, 1.0F)));
 			this.dropSelf(CactusRegistry.CACTUS_SLIME_BLOCK.get());
-			this.dropSelf(CactusRegistry.CACTUS_TNT.get());
-			this.add(CactusRegistry.CACTUS_TNT.get(), LootTable.lootTable().withPool(applyExplosionCondition(CactusRegistry.CACTUS_TNT.get(),
-					LootPool.lootPool().setRolls(ConstantValue.exactly(1.0F))
-							.add(LootItem.lootTableItem(CactusRegistry.CACTUS_TNT.get())
-									.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(CactusRegistry.CACTUS_TNT.get())
-											.setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(TntBlock.UNSTABLE, false)))))));
 			this.dropSelf(CactusRegistry.CARVED_CACTUS.get());
 			this.dropSelf(CactusRegistry.JACKO_CACTUS.get());
 			this.dropSelf(CactusRegistry.PRICKLY_IRON.get());
